@@ -1,3 +1,5 @@
 *__pycache__/
 .vscode/
 flask-course/
+migrations/
+*.sqlite
