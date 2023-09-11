@@ -1,0 +1,22 @@
+<!-- DEVICE TEMPLATE -->
+
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbotron">
+    <h1>Add a New Device Configuration</h1>
+    <p>Enter the information below to add a new device</p>
+    <form method="POST">
+        {{form.hidden_tag()}}
+        {{form.name.label}}{{form.name()}}
+        <br>
+        {{form.type.label}}{{form.type()}}
+        <br>
+        {{form.os.label}}{{form.os()}}
+        <br>
+        {{form.ip.label}}{{form.ip()}}
+        <br>
+        {{form.submit()}}
+
+    </form>
+</div>
+{% endblock %}

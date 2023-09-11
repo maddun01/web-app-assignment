@@ -1,0 +1,14 @@
+<!-- NETWORK TEMPLATE -->
+
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbotron">
+    <h1>List of Networks</h1>
+    <p>Here is a list of the networks in the database</p>
+    <ul>
+        {% for network in networks %}
+        <li>{{network}}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

@@ -20,12 +20,14 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="navbar-nav">
-            <a class="nav-item nav-link" href="">Home</a>
-            <a class="nav-item nav-link" href="">View Networks</a>
-            <a class="nav-item nav-link" href="">View Devices</a>
-            <a class="nav-item nav-link" href="">Kickoff Run</a>
-            <a class="nav-item nav-link" href="">Add Device</a>
-            <a class="nav-item nav-link" href="">Add Network</a>
+            <a class="nav-item nav-link" href="{{url_for('index')}}">Home</a>
+            <a class="nav-item nav-link" href="{{url_for('networks.list_networks')}}">View Networks</a>
+            <a class="nav-item nav-link" href="{{url_for('devices.list_devices')}}">View Devices</a>
+            <a class="nav-item nav-link" href="{{url_for('index')}}">Kickoff Run</a>
+            <a class="nav-item nav-link" href="{{url_for('networks.add_network')}}">Add Network</a>
+            <a class="nav-item nav-link" href="{{url_for('devices.add_device')}}">Add Device</a>
+            <a class="nav-item nav-link" href="{{url_for('networks.delete_network')}}">Delete Network</a>
+            <a class="nav-item nav-link" href="{{url_for('devices.delete_device')}}">Delete Device</a>
         </div>
     </nav>
 

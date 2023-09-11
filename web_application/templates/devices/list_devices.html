@@ -1,0 +1,14 @@
+<!-- DEVICE TEMPLATE -->
+
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbotron">
+    <h1>List of Devices</h1>
+    <p>Here is a list of the devices in the database</p>
+    <ul>
+        {% for device in devices %}
+        <li>{{device}}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+<!-- NETWORK TEMPLATE -->
+
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbotron">
+    <h1>Delete a Network</h1>
+    <p>Enter the network ID to remove it from the database</p>
+    <form method="POST">
+        {{form.hidden_tag()}}
+        {{form.id.label}}{{form.id()}}
+        {{form.submit()}}
+    </form>
+</div>
+{% endblock %}
