@@ -23,8 +23,8 @@ def login():
 
     if form.validate_on_submit():
         # gets the requested user object from the database
-        user_object = User.query.filter_by(email=form.username.data).first()
-        if user_object is not None and user_object.check_password(form.password.data):
+        user_object = User.query.filter_by(username=form.username.data).first()
+        if user_object.check_password(form.password.data) and user_object is not None:
             login_user(user_object)
             flash("You have successfully logged in!")
             next_page = request.args.get("next")
