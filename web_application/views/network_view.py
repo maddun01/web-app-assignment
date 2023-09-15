@@ -2,11 +2,10 @@
 import datetime
 from flask import Blueprint, redirect, render_template, url_for
 from flask_login import login_required
+
 from web_application import db
 from web_application.forms.network_form import AddNetwork, DeleteNetwork
 from web_application.models.decorators import auth_required
-
-# from web_application.models.network_model import Network
 from web_application.models.model import Network
 
 network_blueprint = Blueprint(

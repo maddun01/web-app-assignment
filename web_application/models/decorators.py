@@ -1,6 +1,7 @@
 from flask import current_app, redirect, url_for
 from flask_login import current_user
 from functools import wraps
+
 from web_application import login_manager
 
 

@@ -1,6 +1,7 @@
 from flask_login import UserMixin
-from web_application import db, login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
+
+from web_application import db, login_manager
 
 
 @login_manager.user_loader
@@ -37,7 +38,6 @@ class Datatype(db.Model):
     name = db.Column(db.Text)
     # ONE TO MANY
     datatype = db.relationship("Network", backref="datatype", lazy="dynamic")
-    # network_id = db.Column(db.Integer, db.ForeignKey("networks.id"))
 
     def __init__(self, name):
         self.name = name
@@ -53,7 +53,6 @@ class Device(db.Model):
     os = db.Column(db.Text)
     # MANY TO ONE
     ip_id = db.Column(db.Integer, db.ForeignKey("ips.id"))
-    # ip = db.relationship("Ip", backref="device", uselist=False)
     date_added = db.Column(db.DateTime)
     last_run = db.Column(db.DateTime)
 
@@ -77,7 +76,6 @@ class Ip(db.Model):
     name = db.Column(db.Text)
     # ONE TO MANY
     device = db.relationship("Device", backref="ip", lazy="dynamic")
-    # device_id = db.Column(db.Integer, db.ForeignKey("devices.id"))
 
     def __init__(self, name):
         self.name = name
@@ -91,7 +89,6 @@ class Network(db.Model):
     name = db.Column(db.Text)
     # MANY TO ONE
     datatype_id = db.Column(db.Integer, db.ForeignKey("datatypes.id"))
-    # datatype = db.relationship("Datatype", backref="network", lazy="dynamic")
     provenance = db.Column(db.Text)
     format = db.Column(db.Text)
     date_added = db.Column(db.DateTime)

@@ -1,6 +1,7 @@
 ## VIEW
 from flask import Blueprint, redirect, render_template, url_for, flash, request
 from flask_login import login_user, login_required, logout_user
+
 from web_application import db
 from web_application.forms.authentication_form import LoginForm, RegistrationForm
 from web_application.models.model import User

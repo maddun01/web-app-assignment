@@ -2,11 +2,10 @@
 import datetime
 from flask import Blueprint, redirect, render_template, url_for
 from flask_login import login_required
+
 from web_application import db
 from web_application.forms.device_form import AddDevice, DeleteDevice
 from web_application.models.decorators import auth_required
-
-# from web_application.models.device_model import Device
 from web_application.models.model import Device
 
 device_blueprint = Blueprint(
