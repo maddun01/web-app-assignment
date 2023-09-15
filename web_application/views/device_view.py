@@ -1,10 +1,11 @@
 ## VIEW
 import datetime
 from flask import Blueprint, redirect, render_template, url_for
+from flask_login import login_required
+
 from web_application import db
 from web_application.forms.device_form import AddDevice, DeleteDevice
-
-# from web_application.models.device_model import Device
+from web_application.models.decorators import auth_required
 from web_application.models.model import Device
 
 device_blueprint = Blueprint(
@@ -13,6 +14,7 @@ device_blueprint = Blueprint(
 
 
 @device_blueprint.route("/add", methods=["GET", "POST"])
+@login_required
 def add_device():
     """Adds a new network to the database given a valid form"""
     form = AddDevice()
@@ -34,6 +36,7 @@ def add_device():
 
 
 @device_blueprint.route("/list")
+@login_required
 def list_devices():
     """Displays all current entries in the devices table"""
     devices = Device.query.all()
@@ -41,6 +44,7 @@ def list_devices():
 
 
 @device_blueprint.route("/delete", methods=["GET", "POST"])
+@auth_required()
 def delete_device():
     """Deletes a given device from the database"""
     form = DeleteDevice()
