@@ -27,8 +27,10 @@
             <a class="nav-item nav-link" href="{{url_for('index')}}">Kickoff Run</a>
             <a class="nav-item nav-link" href="{{url_for('networks.add_network')}}">Add Network</a>
             <a class="nav-item nav-link" href="{{url_for('devices.add_device')}}">Add Device</a>
+            {% if current_user.is_admin == True %}
             <a class="nav-item nav-link" href="{{url_for('networks.delete_network')}}">Delete Network</a>
             <a class="nav-item nav-link" href="{{url_for('devices.delete_device')}}">Delete Device</a>
+            {% endif %}
             <a class="nav-item nav-link" href="{{url_for('authentication.logout')}}">Log Out</a>
             {% else %}
             <a class="nav-item nav-link" href="{{url_for('authentication.register')}}">Register</a>

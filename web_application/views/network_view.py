@@ -4,6 +4,7 @@ from flask import Blueprint, redirect, render_template, url_for
 from flask_login import login_required
 from web_application import db
 from web_application.forms.network_form import AddNetwork, DeleteNetwork
+from web_application.models.decorators import auth_required
 
 # from web_application.models.network_model import Network
 from web_application.models.model import Network
@@ -44,7 +45,7 @@ def list_networks():
 
 
 @network_blueprint.route("/delete", methods=["GET", "POST"])
-@login_required
+@auth_required()
 def delete_network():
     """Deletes a given network from the database"""
     form = DeleteNetwork()
