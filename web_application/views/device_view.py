@@ -5,8 +5,8 @@ from flask_login import login_required
 
 from web_application import db
 from web_application.forms.device_form import AddDevice, DeleteDevice
-from web_application.models.decorators import auth_required
 from web_application.models.model import Device
+from web_application.utils import auth_required
 
 device_blueprint = Blueprint(
     "devices", __name__, template_folder="../templates/devices"

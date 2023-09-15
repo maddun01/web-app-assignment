@@ -5,8 +5,8 @@ from flask_login import login_required
 
 from web_application import db
 from web_application.forms.network_form import AddNetwork, DeleteNetwork
-from web_application.models.decorators import auth_required
-from web_application.models.model import Network
+from web_application.models.model import Network, Datatype
+from web_application.utils import auth_required, generate_network_dict
 
 network_blueprint = Blueprint(
     "networks", __name__, template_folder="../templates/networks"
@@ -40,7 +40,8 @@ def add_network():
 def list_networks():
     """Displays all current entries in the networks table"""
     networks = Network.query.all()
-    return render_template("list_networks.html", networks=networks)
+    network_dicts = generate_network_dict(networks)
+    return render_template("list_networks.html", networks=network_dicts)
 
 
 @network_blueprint.route("/delete", methods=["GET", "POST"])

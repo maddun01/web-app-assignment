@@ -3,6 +3,7 @@ from flask_login import current_user
 from functools import wraps
 
 from web_application import login_manager
+from web_application.models.model import Datatype, Ip
 
 
 @login_manager.unauthorized_handler
@@ -26,3 +27,21 @@ def auth_required():
         return decorated_view
 
     return wrapper
+
+
+def generate_network_dict(database_list):
+    network_list = []
+    for network in database_list:
+        datatype_name = Datatype.query.filter_by(id=network.datatype_id).first()
+        print(datatype_name.name)
+        dictionary = {
+            "id": network.id,
+            "name": network.name,
+            "datatype": datatype_name.name,
+            "provenance": network.provenance,
+            "format": network.format,
+            "date_added": network.date_added,
+            "last_run": network.last_run,
+        }
+        network_list.append(dictionary)
+    return network_list

@@ -48,11 +48,11 @@ class Device(db.Model):
 
     __tablename__ = "devices"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.Text)
-    type = db.Column(db.Text)
-    os = db.Column(db.Text)
+    name = db.Column(db.Text, nullable=False)
+    type = db.Column(db.Text, nullable=False)
+    os = db.Column(db.Text, nullable=False)
     # MANY TO ONE
-    ip_id = db.Column(db.Integer, db.ForeignKey("ips.id"))
+    ip_id = db.Column(db.Integer, db.ForeignKey("ips.id"), nullable=False)
     date_added = db.Column(db.DateTime)
     last_run = db.Column(db.DateTime)
 
@@ -64,8 +64,8 @@ class Device(db.Model):
         self.date_added = date_added
         self.last_run = last_run
 
-    def __repr__(self):
-        return f"Device details: \n{self.name}\n{self.type}\n{self.os}\n{self.ip_id}\n{self.date_added}\n{self.last_run}"
+    # def __repr__(self):
+    #     return f"Device details: \n{self.name}\n{self.type}\n{self.os}\n{self.ip_id.name}\n{self.date_added}\n{self.last_run}"
 
 
 class Ip(db.Model):
@@ -102,5 +102,5 @@ class Network(db.Model):
         self.date_added = date_added
         self.last_run = last_run
 
-    def __repr__(self):
-        return f"Network details: \n{self.name}\n{self.datatype_id}\n{self.provenance}\n{self.format}\n{self.date_added}\n{self.last_run}"
+    # def __repr__(self):
+    #     return f"Network details: \n{self.name}\n{self.datatype_id}\n{self.provenance}\n{self.format}\n{self.date_added}\n{self.last_run}"
