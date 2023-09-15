@@ -21,6 +21,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="navbar-nav">
             <a class="nav-item nav-link" href="{{url_for('index')}}">Home</a>
+            {% if current_user.is_authenticated %}
             <a class="nav-item nav-link" href="{{url_for('networks.list_networks')}}">View Networks</a>
             <a class="nav-item nav-link" href="{{url_for('devices.list_devices')}}">View Devices</a>
             <a class="nav-item nav-link" href="{{url_for('index')}}">Kickoff Run</a>
@@ -28,7 +29,6 @@
             <a class="nav-item nav-link" href="{{url_for('devices.add_device')}}">Add Device</a>
             <a class="nav-item nav-link" href="{{url_for('networks.delete_network')}}">Delete Network</a>
             <a class="nav-item nav-link" href="{{url_for('devices.delete_device')}}">Delete Device</a>
-            {% if current_user.is_authenticated %}
             <a class="nav-item nav-link" href="{{url_for('authentication.logout')}}">Log Out</a>
             {% else %}
             <a class="nav-item nav-link" href="{{url_for('authentication.register')}}">Register</a>

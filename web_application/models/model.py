@@ -2,11 +2,13 @@ from flask_login import UserMixin
 from web_application import db, login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
 
-class User(db.Model,UserMixin):
+
+class User(db.Model, UserMixin):
     """Create a table for users in the db"""
 
     __tablename__ = "users"
@@ -15,17 +17,20 @@ class User(db.Model,UserMixin):
     email = db.Column(db.String(64), unique=True, index=True)
     username = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128))
+    is_admin = db.Column(db.Boolean, default=False)
 
-    def __init__(self,email,username,password):
+    def __init__(self, email, username, password):
         self.email = email
         self.username = username
         self.password_hash = generate_password_hash(password)
-    
-    def check_password(self,password):
-        return check_password_hash(self.password_hash,password)
-    
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+
 class Datatype(db.Model):
     """Create a table for datatypes in the db"""
+
     __tablename__ = "datatypes"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -40,6 +45,7 @@ class Datatype(db.Model):
 
 class Device(db.Model):
     """Create a table for devices in the db"""
+
     __tablename__ = "devices"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text)
@@ -65,6 +71,7 @@ class Device(db.Model):
 
 class Ip(db.Model):
     """Create a table for ips in the db"""
+
     __tablename__ = "ips"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text)
@@ -78,6 +85,7 @@ class Ip(db.Model):
 
 class Network(db.Model):
     """Create a table for networks in the db"""
+
     __tablename__ = "networks"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text)
