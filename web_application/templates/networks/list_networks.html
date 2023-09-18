@@ -5,7 +5,14 @@
 <div class="jumbotron">
     <h1>List of Networks</h1>
     <p>Here is a list of the networks in the database</p>
-    <table class="table">
+    <div class="btn-group" role="group" aria-label="Default button group">
+        <button type="button" class="btn btn-outline-dark">Add Network</button>
+        <button type="button" class="btn btn-outline-dark">Update Network</button>
+        {% if current_user.is_admin == True %}
+        <button type="button" class="btn btn-outline-dark">Delete Network</button>
+        {% endif %}
+    </div>
+    <table class="table table-bordered border-primary">
         <thead>
             <tr>
                 <th scope="col">ID</th>

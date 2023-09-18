@@ -2,16 +2,25 @@
 
 {% extends "base.html" %}
 {% block content %}
-<div class="jumbotron">
-    <h1>Login to your account</h1>
-    <form method="POST">
-        {{form.hidden_tag()}}
-        {{form.username.label}}{{form.username()}}
+<div class="container my-5">
+    <div class="jumbotron text-center bg-body-secondary">
+        <h1 class="text-body-emphasis">Login to your Account</h1>
         <br>
-        {{form.password.label}}{{form.password()}}
-        <br>
-        {{form.submit()}}
-
-    </form>
+        <div class="d-inline-flex gap-2 mb-5">
+            <form method="POST">
+                {{form.hidden_tag()}}
+                <div class="form-floating">
+                    {{form.username(class="form-control")}}
+                    {{form.username.label()}}
+                </div>
+                <div class="form-floating">
+                    {{form.password(class="form-control")}}
+                    {{form.password.label()}}
+                </div>
+                <br>
+                {{form.submit(class="btn btn-outline-primary")}}
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock %}

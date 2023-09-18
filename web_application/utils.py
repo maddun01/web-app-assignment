@@ -6,6 +6,7 @@ from web_application import login_manager
 from web_application.models.model import Datatype, Ip
 
 
+# overrides flask-login's automatic redirect with the path for the homepage
 @login_manager.unauthorized_handler
 def unauthorized_callback():
     return redirect(url_for("index"))
@@ -30,6 +31,7 @@ def auth_required():
 
 
 def generate_network_dict(database_list):
+    """Generates a network dictionary that can be displayed"""
     network_list = []
     for network in database_list:
         datatype_name = Datatype.query.filter_by(id=network.datatype_id).first()

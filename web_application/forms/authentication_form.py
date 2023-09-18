@@ -24,7 +24,7 @@ class RegistrationForm(FlaskForm):
         ],
     )
     confirm_password = PasswordField("Reenter Password", validators=[DataRequired()])
-    submit = SubmitField("Login")
+    submit = SubmitField("Register")
 
     def validate_email(self, email):
         if User.query.filter_by(email=self.email.data).first():
