@@ -6,7 +6,7 @@ from flask_login import login_required
 from web_application import db
 from web_application.forms.device_form import AddDevice, DeleteDevice
 from web_application.models.model import Device
-from web_application.utils import auth_required
+from web_application.utils import auth_required, generate_device_dict
 
 device_blueprint = Blueprint(
     "devices", __name__, template_folder="../templates/devices"
@@ -40,7 +40,8 @@ def add_device():
 def list_devices():
     """Displays all current entries in the devices table"""
     devices = Device.query.all()
-    return render_template("list_devices.html", devices=devices)
+    device_dicts = generate_device_dict(devices)
+    return render_template("list_devices.html", devices=device_dicts)
 
 
 @device_blueprint.route("/delete", methods=["GET", "POST"])

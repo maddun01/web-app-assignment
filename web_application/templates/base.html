@@ -21,39 +21,46 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgb(0, 43, 73);">
         <div class="container-fluid">
-            <ul class="navbar-nav me-left">
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{url_for('index')}}">Home</a>
-                </li>
-                {% if current_user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{url_for('devices.list_devices')}}">Devices</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('networks.list_networks')}}">Networks</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('index')}}">Kickoff Run</a>
-                </li>
-                {% endif %}
-            </ul>
+            <div class="col">
+                <ul class="navbar-nav me-left">
 
-            <ul class="navbar-nav me-right">
-                {% if current_user.is_authenticated %}
-                <li class="navbar-text">Welcome, {{current_user.username}}</li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('authentication.logout')}}">Logout</a>
-                </li>
-                {% else %}
-                <li class="nav-item me-right" style="text-align: right;">
-                    <a class="nav-link" aria-current="page" href="{{url_for('authentication.login')}}">Login</a>
-                </li>
-                <li class="nav-item me-right">
-                    <a class="nav-link" href="{{url_for('authentication.register')}}">Register</a>
-                </li>
-                {% endif %}
-            </ul>
-
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{{url_for('index')}}">Home</a>
+                    </li>
+                    {% if current_user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{{url_for('devices.list_devices')}}">Devices</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('networks.list_networks')}}">Networks</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('index')}}">Kickoff Run</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="col-sm-auto">
+                <h1 class="text-center" , style="color: white;">System Analysis Configurations Dashboard</h1>
+            </div>
+            <div class="col">
+                <ul class="navbar-nav">
+                    {% if current_user.is_authenticated %}
+                    <li class="navbar-text ms-auto" , style="color: rgb(242, 250, 249)">Welcome,
+                        {{current_user.username}}</li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('authentication.logout')}}">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item ms-auto" style="text-align: right;">
+                        <a class="nav-link" aria-current="page" href="{{url_for('authentication.login')}}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('authentication.register')}}">Register</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
     </nav>
 

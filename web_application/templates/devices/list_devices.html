@@ -5,10 +5,38 @@
 <div class="jumbotron">
     <h1>List of Devices</h1>
     <p>Here is a list of the devices in the database</p>
-    <ul>
-        {% for device in devices %}
-        <li>{{device}}</li>
-        {% endfor %}
-    </ul>
+    <div class="btn-group" role="group" aria-label="Default button group">
+        <button type="button" class="btn btn-outline-dark">Add Device</button>
+        <button type="button" class="btn btn-outline-dark">Update Device</button>
+        {% if current_user.is_admin == True %}
+        <button type="button" class="btn btn-outline-dark">Delete Device</button>
+        {% endif %}
+    </div>
+    <table class="table table-bordered border-primary">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Type</th>
+                <th scope="col">OS</th>
+                <th scope="col">IP</th>
+                <th scope="col">Date Added</th>
+                <th scope="col">Date of Last Run</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for device in devices %}
+            <tr>
+                <td>{{device["id"]}}</td>
+                <td>{{device["name"]}}</td>
+                <td>{{device["type"]}}</td>
+                <td>{{device["os"]}}</td>
+                <td>{{device["ip"]}}</td>
+                <td>{{device["date_added"]}}</td>
+                <td>{{device["last_run"]}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock %}

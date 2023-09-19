@@ -30,6 +30,25 @@ def auth_required():
     return wrapper
 
 
+def generate_device_dict(database_list):
+    """Generates a device dictionary that can be displayed"""
+    device_list = []
+    for device in database_list:
+        ip_name = Ip.query.filter_by(id=device.ip_id).first()
+        print(ip_name.name)
+        dictionary = {
+            "id": device.id,
+            "name": device.name,
+            "type": device.type,
+            "os": device.os,
+            "ip": ip_name.name,
+            "date_added": device.date_added,
+            "last_run": device.last_run,
+        }
+        device_list.append(dictionary)
+    return device_list
+
+
 def generate_network_dict(database_list):
     """Generates a network dictionary that can be displayed"""
     network_list = []
