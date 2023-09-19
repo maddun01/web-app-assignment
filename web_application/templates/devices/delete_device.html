@@ -2,13 +2,19 @@
 
 {% extends "base.html" %}
 {% block content %}
-<div class="jumbotron">
+<div class="jumbotron text-center p-5">
     <h1>Delete a Device</h1>
-    <p>Enter the device ID to remove it from the database</p>
-    <form method="POST">
-        {{form.hidden_tag()}}
-        {{form.id.label}}{{form.id()}}
-        {{form.submit()}}
-    </form>
+    <p>Enter a device ID to remove it from the database</p>
+    <div class="d-inline-flex gap-2 mb-5">
+        <form method="POST">
+            {{form.hidden_tag()}}
+            <div class="form-floating">
+                {{form.id(class="form-control")}}
+                {{form.id.label}}
+            </div>
+            <br>
+            {{form.submit(class="btn col-lg-12")}}
+        </form>
+    </div>
 </div>
 {% endblock %}

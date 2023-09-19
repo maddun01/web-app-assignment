@@ -6,7 +6,7 @@ from wtforms import StringField, IntegerField, RadioField, SubmitField
 
 class AddNetwork(FlaskForm):
     name = StringField("Enter network name: ")
-    datatype = StringField("RADIO ")
+    datatype = RadioField()
     provenance = StringField("Enter provenance: ")
     format = StringField("Enter format: ")
     submit = SubmitField("Add network")

@@ -1,8 +1,43 @@
 body {
-    background-color: rgb(242, 250, 249);
+    background-color: #f2faf9;
+}
+
+.btn {
+    color: #002b49;
+    border-color: #002b49;
+
+}
+
+.btn:hover {
+    color: #ffffff;
+    background-color: #002b49;
+    border-color: #002b49
+}
+
+
+.form-check-input {
+    border-color: #002b49;
+}
+
+.form-check-input:checked {
+    background-color: #002b49;
+    border-color: #002b49;
+}
+
+h1 {
+    color: #002b49;
+}
+
+p {
+    color: #002b49;
 }
 
 .nav-link {
     color: white;
     font-weight: bold
+}
+
+.table {
+    border: #002b49;
+    background-color: #f2faf9;
 }

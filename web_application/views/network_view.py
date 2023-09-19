@@ -18,7 +18,9 @@ network_blueprint = Blueprint(
 def add_network():
     """Adds a new network to the database given a valid form"""
     form = AddNetwork()
-
+    form.datatype.choices = [
+        (datatype.id, datatype.name) for datatype in Datatype.query.all()
+    ]
     if form.validate_on_submit():
         name = form.name.data
         datatype = form.datatype.data

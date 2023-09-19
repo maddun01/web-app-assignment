@@ -2,20 +2,24 @@
 
 {% extends "base.html" %}
 {% block content %}
-<div class="jumbotron">
+<div class="jumbotron text-center p-5">
     <h1>List of Devices</h1>
-    <p>Here is a list of the devices in the database</p>
+    <p>Here is a list of the current device configurations in the database</p>
     <div class="btn-group" role="group" aria-label="Default button group">
-        <button type="button" class="btn btn-outline-dark">Add Device</button>
-        <button type="button" class="btn btn-outline-dark">Update Device</button>
+        <a type="button" class="btn" href="{{url_for('devices.add_device')}}">Add Device</a>
+        <a type="button" class="btn" href="{{url_for('devices.list_devices')}}">Update Device</a>
         {% if current_user.is_admin == True %}
-        <button type="button" class="btn btn-outline-dark">Delete Device</button>
+        <a type="button" class="btn" href="{{url_for('devices.delete_device')}}">Delete Device</a>
         {% endif %}
     </div>
-    <table class="table table-bordered border-primary">
+</div>
+
+<div class="jumbotron">
+
+    <table class="table table-bordered">
         <thead>
             <tr>
-                <th scope="col">ID</th>
+                <th scope=" col">ID</th>
                 <th scope="col">Name</th>
                 <th scope="col">Type</th>
                 <th scope="col">OS</th>

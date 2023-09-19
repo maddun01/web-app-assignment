@@ -2,21 +2,38 @@
 
 {% extends "base.html" %}
 {% block content %}
-<div class="jumbotron">
+<div class="jumbotron text-center p-5">
     <h1>Add a New Network Configuration</h1>
     <p>Enter the information below to add a new network</p>
-    <form method="POST">
-        {{form.hidden_tag()}}
-        {{form.name.label}}{{form.name()}}
-        <br>
-        {{form.datatype.label}}{{form.datatype()}}
-        <br>
-        {{form.provenance.label}}{{form.provenance()}}
-        <br>
-        {{form.format.label}}{{form.format()}}
-        <br>
-        {{form.submit()}}
+    <div class="col-xxl-4 col-lg-6 mx-auto">
+        <form method="POST">
+            {{form.hidden_tag()}}
 
-    </form>
+            <div class="form-floating">
+                {{form.name(class="form-control")}}
+                {{form.name.label}}
+            </div>
+            <p>Datatype</p>
+            {% for subfield in form.datatype %}
+            <div class="form-check form-check-inline">
+                <td>{{subfield(class="form-check-input")}}</td>
+                <td>{{subfield.label}}</td>
+            </div>
+            {% endfor %}
+            <br>
+            <div class="form-floating">
+                {{form.provenance(class="form-control")}}
+                {{form.provenance.label}}
+            </div>
+            <br>
+            <div class="form-floating">
+                {{form.format(class="form-control")}}
+                {{form.format.label}}
+            </div>
+            <br>
+            {{form.submit(class="btn col-lg-12")}}
+
+        </form>
+    </div>
 </div>
 {% endblock %}

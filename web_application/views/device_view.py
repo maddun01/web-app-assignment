@@ -5,7 +5,7 @@ from flask_login import login_required
 
 from web_application import db
 from web_application.forms.device_form import AddDevice, DeleteDevice
-from web_application.models.model import Device
+from web_application.models.model import Device, Ip
 from web_application.utils import auth_required, generate_device_dict
 
 device_blueprint = Blueprint(
@@ -18,6 +18,7 @@ device_blueprint = Blueprint(
 def add_device():
     """Adds a new network to the database given a valid form"""
     form = AddDevice()
+    form.ip.choices = [(ip.id, ip.name) for ip in Ip.query.all()]
 
     if form.validate_on_submit():
         name = form.name.data
