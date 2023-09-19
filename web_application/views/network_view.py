@@ -4,7 +4,7 @@ from flask import Blueprint, redirect, render_template, url_for
 from flask_login import login_required
 
 from web_application import db
-from web_application.forms.network_form import AddNetwork, DeleteNetwork
+from web_application.forms.network_form import AddNetwork, UpdateNetwork, DeleteNetwork
 from web_application.models.model import Network, Datatype
 from web_application.utils import auth_required, generate_network_dict
 
@@ -35,6 +35,34 @@ def add_network():
         return redirect(url_for("networks.list_networks"))
     else:
         return render_template("add_network.html", form=form)
+
+
+@network_blueprint.route("/update", methods=["GET", "POST"])
+@login_required
+def update_network():
+    """Updates a chosen network with the given data"""
+    form = UpdateNetwork()
+    form.datatype.choices = [
+        (datatype.id, datatype.name) for datatype in Datatype.query.all()
+    ]
+    form.network.choices = [
+        (network.id, f"{network.id}: {network.name}, {network.date_added}")
+        for network in Network.query.all()
+    ]
+    network = Network.query.all()[0]
+    if form.validate_on_submit():
+        network = form.network.data
+        updated_network = Network.query.get(network)
+
+        updated_network.name = form.name.data
+        updated_network.datatype_id = form.datatype.data
+        updated_network.provenance = form.provenance.data
+        updated_network.format = form.format.data
+
+        db.session.add(updated_network)
+        db.session.commit()
+        return redirect(url_for("networks.list_networks"))
+    return render_template("update_network.html", form=form, network=network)
 
 
 @network_blueprint.route("/list")

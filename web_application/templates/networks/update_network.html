@@ -1,0 +1,40 @@
+<!-- NETWORK TEMPLATE -->
+
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbotron text-center p-5">
+    <h1>Update a Network Configuration</h1>
+    <p>Select a Configuration from the dropdown, then enter the new information in the fields</p>
+    <div class="col-xxl-4 col-lg-6 mx-auto">
+        <form method="POST">
+            {{form.hidden_tag()}}
+            {{form.network(class="form-select")}}
+            <br>
+            <div class="form-floating">
+                {{form.name(class="form-control", value=network.name)}}
+                {{form.name.label()}}
+            </div>
+            <p>Current Datatype</p>
+            {% for subfield in form.datatype %}
+            <div class="form-check form-check-inline">
+                <td>{{subfield(class="form-check-input")}}</td>
+                <td>{{subfield.label}}</td>
+            </div>
+            {% endfor %}
+            <br>
+            <div class="form-floating">
+                {{form.provenance(class="form-control", value=network.provenance)}}
+                {{form.provenance.label}}
+            </div>
+            <br>
+            <div class="form-floating">
+                {{form.format(class="form-control", value=network.format)}}
+                {{form.format.label}}
+            </div>
+            <br>
+            {{form.submit(class="btn col-lg-12")}}
+
+        </form>
+    </div>
+</div>
+{% endblock %}

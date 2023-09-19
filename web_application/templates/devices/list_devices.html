@@ -7,7 +7,7 @@
     <p>Here is a list of the current device configurations in the database</p>
     <div class="btn-group" role="group" aria-label="Default button group">
         <a type="button" class="btn" href="{{url_for('devices.add_device')}}">Add Device</a>
-        <a type="button" class="btn" href="{{url_for('devices.list_devices')}}">Update Device</a>
+        <a type="button" class="btn" href="{{url_for('devices.update_device')}}">Update Device</a>
         {% if current_user.is_admin == True %}
         <a type="button" class="btn" href="{{url_for('devices.delete_device')}}">Delete Device</a>
         {% endif %}

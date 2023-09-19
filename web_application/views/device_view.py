@@ -4,7 +4,7 @@ from flask import Blueprint, redirect, render_template, url_for
 from flask_login import login_required
 
 from web_application import db
-from web_application.forms.device_form import AddDevice, DeleteDevice
+from web_application.forms.device_form import AddDevice, UpdateDevice, DeleteDevice
 from web_application.models.model import Device, Ip
 from web_application.utils import auth_required, generate_device_dict
 
@@ -16,7 +16,7 @@ device_blueprint = Blueprint(
 @device_blueprint.route("/add", methods=["GET", "POST"])
 @login_required
 def add_device():
-    """Adds a new network to the database given a valid form"""
+    """Adds a new device to the database given a valid form"""
     form = AddDevice()
     form.ip.choices = [(ip.id, ip.name) for ip in Ip.query.all()]
 
@@ -34,6 +34,32 @@ def add_device():
         return redirect(url_for("devices.list_devices"))
     else:
         return render_template("add_device.html", form=form)
+
+
+@device_blueprint.route("/update", methods=["GET", "POST"])
+@login_required
+def update_device():
+    """Updates a chosen device with the given data"""
+    form = UpdateDevice()
+    form.ip.choices = [(ip.id, ip.name) for ip in Ip.query.all()]
+    form.device.choices = [
+        (device.id, f"{device.id}: {device.name}, {device.date_added}")
+        for device in Device.query.all()
+    ]
+    device = Device.query.all()[0]
+    if form.validate_on_submit():
+        device = form.device.data
+        updated_device = Device.query.get(device)
+
+        updated_device.name = form.name.data
+        updated_device.type = form.type.data
+        updated_device.os = form.os.data
+        updated_device.ip_id = form.ip.data
+
+        db.session.add(updated_device)
+        db.session.commit()
+        return redirect(url_for("devices.list_devices"))
+    return render_template("update_device.html", form=form, device=device)
 
 
 @device_blueprint.route("/list")

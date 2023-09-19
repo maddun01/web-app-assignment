@@ -1,17 +1,26 @@
 ## FORM
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, RadioField, SubmitField
+from wtforms import StringField, IntegerField, RadioField, SelectField, SubmitField
 
 
 class AddNetwork(FlaskForm):
-    name = StringField("Enter network name: ")
+    name = StringField("Network Name")
     datatype = RadioField()
-    provenance = StringField("Enter provenance: ")
-    format = StringField("Enter format: ")
-    submit = SubmitField("Add network")
+    provenance = StringField("Network Provenance")
+    format = StringField("Network Format")
+    submit = SubmitField("Add Network")
+
+
+class UpdateNetwork(FlaskForm):
+    network = SelectField("Select a Network")
+    name = StringField("Current Network Name ")
+    datatype = RadioField()
+    provenance = StringField("Current Provenance")
+    format = StringField("Current Format")
+    submit = SubmitField("Update")
 
 
 class DeleteNetwork(FlaskForm):
-    id = IntegerField("Enter network ID: ")
+    id = IntegerField("Network ID")
     submit = SubmitField("Delete network")

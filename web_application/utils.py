@@ -35,7 +35,6 @@ def generate_device_dict(database_list):
     device_list = []
     for device in database_list:
         ip_name = Ip.query.filter_by(id=device.ip_id).first()
-        print(ip_name.name)
         dictionary = {
             "id": device.id,
             "name": device.name,
@@ -54,7 +53,6 @@ def generate_network_dict(database_list):
     network_list = []
     for network in database_list:
         datatype_name = Datatype.query.filter_by(id=network.datatype_id).first()
-        print(datatype_name.name)
         dictionary = {
             "id": network.id,
             "name": network.name,
