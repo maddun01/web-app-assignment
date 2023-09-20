@@ -19,7 +19,6 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th scope=" col">ID</th>
                 <th scope="col">Name</th>
                 <th scope="col">Type</th>
                 <th scope="col">OS</th>
@@ -31,7 +30,6 @@
         <tbody>
             {% for device in devices %}
             <tr>
-                <td>{{device["id"]}}</td>
                 <td>{{device["name"]}}</td>
                 <td>{{device["type"]}}</td>
                 <td>{{device["os"]}}</td>

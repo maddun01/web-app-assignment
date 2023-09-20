@@ -1,5 +1,5 @@
 ## VIEW
-from flask import Blueprint, redirect, render_template, url_for, flash, request
+from flask import Blueprint, redirect, render_template, url_for, request
 from flask_login import login_user, login_required, logout_user
 
 from web_application import db
@@ -15,7 +15,6 @@ authentication_blueprint = Blueprint(
 @login_required
 def logout():
     logout_user()
-    flash("You have been logged out")
     return redirect(url_for("index"))
 
 
@@ -29,7 +28,6 @@ def login():
         user_object = User.query.filter_by(username=form.username.data).first()
         if user_object.check_password(form.password.data) and user_object is not None:
             login_user(user_object)
-            flash("You have successfully logged in!")
             next_page = request.args.get("next")
             if next_page == None or not next[0] == "/":
                 next_page = url_for("index")
@@ -51,6 +49,6 @@ def register():
 
         db.session.add(new_user)
         db.session.commit()
-        flash("Successfully registered! Please log in")
+
         return redirect(url_for("authentication.login"))
     return render_template("register.html", form=form)

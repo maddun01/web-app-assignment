@@ -3,12 +3,13 @@ from flask_login import current_user
 from functools import wraps
 
 from web_application import login_manager
-from web_application.models.model import Datatype, Ip
+from web_application.models.model import Datatype, Device, Ip, Network
 
 
-# overrides flask-login's automatic redirect with the path for the homepage
+# used when an unauthorized user attempts to access restricted pages
 @login_manager.unauthorized_handler
 def unauthorized_callback():
+    """Overrides flask-login's automatic redirect with the path for the homepage"""
     return redirect(url_for("index"))
 
 
@@ -64,3 +65,23 @@ def generate_network_dict(database_list):
         }
         network_list.append(dictionary)
     return network_list
+
+
+def set_device_choices():
+    return [
+        (
+            device.id,
+            f"{device.name}, {device.type}, {device.os}, {(Ip.query.get(device.ip_id)).name}, {device.date_added}",
+        )
+        for device in Device.query.all()
+    ]
+
+
+def set_network_choices():
+    return [
+        (
+            network.id,
+            f"{network.name}, {(Datatype.query.get(network.datatype_id)).name}, {network.provenance}, {network.format}, {network.date_added}",
+        )
+        for network in Network.query.all()
+    ]
