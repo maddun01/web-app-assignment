@@ -4,7 +4,9 @@
 {% block content %}
 <div class="jumbotron text-center p-5">
     <h1>Add a New Network Configuration</h1>
+    <br>
     <p>Enter the information below to add a new network</p>
+    <br>
     <div class="col-xxl-4 col-lg-6 mx-auto">
         <form method="POST">
             {{form.hidden_tag()}}
@@ -31,8 +33,10 @@
                 {{form.format.label}}
             </div>
             <br>
-            {{form.submit(class="btn col-lg-12")}}
-
+            <div class="row">
+                {{form.submit(class="btn col-lg-6")}}
+                <a href="{{url_for('networks.list_networks')}}" class="btn col-lg-6">Cancel</a>
+            </div>
         </form>
     </div>
 </div>

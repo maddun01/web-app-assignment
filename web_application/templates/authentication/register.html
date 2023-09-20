@@ -3,33 +3,47 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container my-5">
-    <div class="jumbotron text-center bg-body-secondary">
+    <div class="jumbotron text-center">
         <h1 class="text-body-emphasis">Create a new Account</h1>
+        <br>
         <p>With an account, you will be able to view and manage device and network configurations</p>
         <p>You will also be able to begin new tests</p>
         <br>
         <div class="d-inline-flex gap-2 mb-5">
             <form method="POST">
                 {{form.hidden_tag()}}
-                <div class="form-floating">
-                    {{form.email(class="form-control", placeholder="")}}
-                    {{form.email.label()}}
+                <div class="has-validation">
+                    <div class="form-floating">
+                        {{form.email(class="form-control", placeholder="")}}
+                        {{form.email.label()}}
+                    </div>
+                    {% if form.errors["email"]%}
+                    <p>{{form.errors["email"][0]}}</p>
+                    {%endif%}
+                    <div class="form-floating">
+                        {{form.username(class="form-control", placeholder="")}}
+                        {{form.username.label()}}
+                    </div>
+                    {% if form.errors["username"]%}
+                    <p>{{form.errors["username"][0]}}</p>
+                    {% else %}
+                    <br>
+                    {%endif%}
+                    <div class="form-floating">
+                        {{form.password(class="form-control", placeholder="")}}
+                        {{form.password.label()}}
+                    </div>
+                    <div class="form-floating">
+                        {{form.confirm_password(class="form-control", placeholder="")}}
+                        {{form.confirm_password.label()}}
+                    </div>
+                    {% if form.errors["password"]%}
+                    <p>{{form.errors["password"][0]}}</p>
+                    {% else %}
+                    <br>
+                    {%endif%}
+                    {{form.submit(class="btn col-lg-12")}}
                 </div>
-                <div class="form-floating">
-                    {{form.username(class="form-control", placeholder="")}}
-                    {{form.username.label()}}
-                </div>
-                <br>
-                <div class="form-floating">
-                    {{form.password(class="form-control", placeholder="")}}
-                    {{form.password.label()}}
-                </div>
-                <div class="form-floating">
-                    {{form.confirm_password(class="form-control", placeholder="")}}
-                    {{form.confirm_password.label()}}
-                </div>
-                <br>
-                {{form.submit(class="btn col-lg-12")}}
             </form>
         </div>
     </div>

@@ -6,14 +6,18 @@ from wtforms.validators import DataRequired, Optional
 
 
 class AddNetwork(FlaskForm):
+    """Inputs for adding a new network"""
+
     name = StringField("Network Name", validators=[DataRequired()])
     datatype = RadioField(validators=[DataRequired()])
     provenance = StringField("Network Provenance", validators=[DataRequired()])
     format = StringField("Network Format", validators=[DataRequired()])
-    submit = SubmitField("Add Network", validators=[DataRequired()])
+    submit = SubmitField("Add Network")
 
 
 class UpdateNetwork(FlaskForm):
+    """Optional inputs for updating a saved network configuration"""
+
     network = SelectField(
         "Select a Network", validators=[Optional()], filters=[lambda x: x or None]
     )
@@ -27,9 +31,7 @@ class UpdateNetwork(FlaskForm):
     format = StringField(
         "New Format", validators=[Optional()], filters=[lambda x: x or None]
     )
-    submit = SubmitField(
-        "Update", validators=[Optional()], filters=[lambda x: x or None]
-    )
+    submit = SubmitField("Update")
 
 
 class DeleteNetwork(FlaskForm):

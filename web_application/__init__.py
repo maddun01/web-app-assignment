@@ -9,9 +9,10 @@ login_manager = LoginManager()
 
 # set up flask application
 app = Flask(__name__)
-# secret key for forms
 
+# secret key for forms
 app.config["SECRET_KEY"] = "mysecretkey"
+
 # database setup and config
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -29,11 +30,13 @@ login_manager.login_view = "login"
 
 
 # imports for flask blueprints
-
+from web_application.handlers import error_blueprint
 from web_application.views.authentication_view import authentication_blueprint
 from web_application.views.device_view import device_blueprint
 from web_application.views.network_view import network_blueprint
 
+# blueprints
 app.register_blueprint(authentication_blueprint, url_prefix="/auth")
 app.register_blueprint(device_blueprint, url_prefix="/device")
+app.register_blueprint(error_blueprint, url_prefix="/error")
 app.register_blueprint(network_blueprint, url_prefix="/network")

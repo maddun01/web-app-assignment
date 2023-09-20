@@ -6,9 +6,10 @@ from web_application import login_manager
 from web_application.models.model import Datatype, Ip
 
 
-# overrides flask-login's automatic redirect with the path for the homepage
+# used when an unauthorized user attempts to access restricted pages
 @login_manager.unauthorized_handler
 def unauthorized_callback():
+    """Overrides flask-login's automatic redirect with the path for the homepage"""
     return redirect(url_for("index"))
 
 

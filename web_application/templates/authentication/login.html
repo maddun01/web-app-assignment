@@ -3,8 +3,10 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container my-5">
-    <div class="jumbotron text-center bg-body-secondary">
-        <h1 class="text-body-emphasis">Login to your Account</h1>
+    <div class="jumbotron text-center">
+        <h1 class="text-body-emphasis">Log in to your Account</h1>
+        <br>
+        <p>Log in to manage device and network configurations</p>
         <br>
         <div class="d-inline-flex gap-2 mb-5">
             <form method="POST">
@@ -13,11 +15,19 @@
                     {{form.username(class="form-control", placeholder="")}}
                     {{form.username.label}}
                 </div>
+                {% if form.errors["username"]%}
+                <p>{{form.errors["username"][0]}}</p>
+                {%endif%}
                 <div class="form-floating">
                     {{form.password(class="form-control", placeholder="")}}
                     {{form.password.label}}
                 </div>
+                {% if form.errors["password"]%}
+                <p>{{form.errors["password"][0]}}</p>
+                {% else %}
                 <br>
+                {%endif%}
+
                 {{form.submit(class="btn col-lg-12")}}
             </form>
         </div>
