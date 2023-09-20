@@ -12,6 +12,7 @@ def load_user(user_id):
 class User(db.Model, UserMixin):
     """Create a table for users in the db"""
 
+    # overrides the default table name
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)

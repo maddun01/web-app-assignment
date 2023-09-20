@@ -5,13 +5,14 @@
 <div class="jumbotron text-center p-5">
     <h1>Update a Network Configuration</h1>
     <p>Select a Configuration from the dropdown, then enter the new information in the fields</p>
+    <p>Fields can be left blank to leave the data unchanged</p>
     <div class="col-xxl-4 col-lg-6 mx-auto">
         <form method="POST">
             {{form.hidden_tag()}}
             {{form.network(class="form-select")}}
             <br>
             <div class="form-floating">
-                {{form.name(class="form-control", value=network.name)}}
+                {{form.name(class="form-control", placeholder="")}}
                 {{form.name.label()}}
             </div>
             <p>Current Datatype</p>
@@ -23,12 +24,12 @@
             {% endfor %}
             <br>
             <div class="form-floating">
-                {{form.provenance(class="form-control", value=network.provenance)}}
+                {{form.provenance(class="form-control", placeholder="")}}
                 {{form.provenance.label}}
             </div>
             <br>
             <div class="form-floating">
-                {{form.format(class="form-control", value=network.format)}}
+                {{form.format(class="form-control", placeholder="")}}
                 {{form.format.label}}
             </div>
             <br>

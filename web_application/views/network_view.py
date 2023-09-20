@@ -46,23 +46,32 @@ def update_network():
         (datatype.id, datatype.name) for datatype in Datatype.query.all()
     ]
     form.network.choices = [
-        (network.id, f"{network.id}: {network.name}, {network.date_added}")
+        (
+            network.id,
+            f"{network.id}: {network.name}, {(Datatype.query.get(network.datatype_id)).name}, {network.provenance}, {network.format}, {network.date_added}",
+        )
         for network in Network.query.all()
     ]
-    network = Network.query.all()[0]
+
     if form.validate_on_submit():
         network = form.network.data
         updated_network = Network.query.get(network)
 
-        updated_network.name = form.name.data
-        updated_network.datatype_id = form.datatype.data
-        updated_network.provenance = form.provenance.data
-        updated_network.format = form.format.data
+        field_mapping = {
+            "name": ("name", form.name.data),
+            "datatype_id": ("datatype_id", form.datatype.data),
+            "provenance": ("provenance", form.provenance.data),
+            "format": ("format", form.format.data),
+        }
+
+        for field, (network_field, data) in field_mapping.items():
+            if data is not None:
+                setattr(updated_network, network_field, data)
 
         db.session.add(updated_network)
         db.session.commit()
         return redirect(url_for("networks.list_networks"))
-    return render_template("update_network.html", form=form, network=network)
+    return render_template("update_network.html", form=form)
 
 
 @network_blueprint.route("/list")

@@ -10,7 +10,7 @@
             {{form.hidden_tag()}}
 
             <div class="form-floating">
-                {{form.name(class="form-control")}}
+                {{form.name(class="form-control", placeholder="")}}
                 {{form.name.label}}
             </div>
             <p>Datatype</p>
@@ -22,12 +22,12 @@
             {% endfor %}
             <br>
             <div class="form-floating">
-                {{form.provenance(class="form-control")}}
+                {{form.provenance(class="form-control", placeholder="")}}
                 {{form.provenance.label}}
             </div>
             <br>
             <div class="form-floating">
-                {{form.format(class="form-control")}}
+                {{form.format(class="form-control", placeholder="")}}
                 {{form.format.label}}
             </div>
             <br>

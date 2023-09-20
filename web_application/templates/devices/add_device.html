@@ -9,23 +9,23 @@
         <form method="POST">
             {{form.hidden_tag()}}
             <div class="form-floating">
-                {{form.name(class="form-control")}}
+                {{form.name(class="form-control", placeholder="")}}
                 {{form.name.label}}
             </div>
             <br>
             <div class="form-floating">
-                {{form.type(class="form-control")}}
+                {{form.type(class="form-control", placeholder="")}}
                 {{form.type.label}}
             </div>
             <br>
             <div class="form-floating">
-                {{form.os(class="form-control")}}
+                {{form.os(class="form-control", placeholder="")}}
                 {{form.os.label}}
             </div>
             <p>IP</p>
             {% for subfield in form.ip %}
             <div class="form-check form-check-inline">
-                <td>{{subfield(class="form-check-input")}}
+                <td>{{subfield(class="form-check-input", placeholder="")}}
                 </td>
                 <td>{{subfield.label}}</td>
             </div>

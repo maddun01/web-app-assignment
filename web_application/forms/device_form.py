@@ -2,25 +2,32 @@
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, RadioField, SelectField, SubmitField
+from wtforms.validators import DataRequired, Optional
 
 
 class AddDevice(FlaskForm):
-    name = StringField("Device Name")
-    type = StringField("Device Type")
-    os = StringField("Device Operating System")
-    ip = RadioField()
-    submit = SubmitField("Add Device")
+    name = StringField("Device Name", validators=[DataRequired()])
+    type = StringField("Device Type", validators=[DataRequired()])
+    os = StringField("Device Operating System", validators=[DataRequired()])
+    ip = RadioField(validators=[DataRequired()])
+    submit = SubmitField("Add Device", validators=[DataRequired()])
 
 
 class UpdateDevice(FlaskForm):
-    device = SelectField("Select a Device")
-    name = StringField("Current Device Name ")
-    type = StringField("Current Type")
-    os = StringField("Current OS")
-    ip = RadioField()
+    device = SelectField(
+        "Select a Device", validators=[Optional()], filters=[lambda x: x or None]
+    )
+    name = StringField(
+        "New Device Name", validators=[Optional()], filters=[lambda x: x or None]
+    )
+    type = StringField(
+        "New Type", validators=[Optional()], filters=[lambda x: x or None]
+    )
+    os = StringField("New OS", validators=[Optional()], filters=[lambda x: x or None])
+    ip = RadioField(validators=[Optional()], filters=[lambda x: x or None])
     submit = SubmitField("Update")
 
 
 class DeleteDevice(FlaskForm):
-    id = IntegerField("Device ID")
+    id = IntegerField("Device ID", validators=[DataRequired()])
     submit = SubmitField("Delete Device")

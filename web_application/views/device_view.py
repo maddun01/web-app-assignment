@@ -43,23 +43,31 @@ def update_device():
     form = UpdateDevice()
     form.ip.choices = [(ip.id, ip.name) for ip in Ip.query.all()]
     form.device.choices = [
-        (device.id, f"{device.id}: {device.name}, {device.date_added}")
+        (
+            device.id,
+            f"{device.id}: {device.name}, {device.type}, {device.os}, {(Ip.query.get(device.ip_id)).name}, {device.date_added}",
+        )
         for device in Device.query.all()
     ]
-    device = Device.query.all()[0]
     if form.validate_on_submit():
         device = form.device.data
         updated_device = Device.query.get(device)
 
-        updated_device.name = form.name.data
-        updated_device.type = form.type.data
-        updated_device.os = form.os.data
-        updated_device.ip_id = form.ip.data
+        field_mapping = {
+            "name": ("name", form.name.data),
+            "type": ("type", form.type.data),
+            "os": ("os", form.os.data),
+            "ip_id": ("ip_id", form.ip.data),
+        }
+
+        for field, (device_field, data) in field_mapping.items():
+            if data is not None:
+                setattr(updated_device, device_field, data)
 
         db.session.add(updated_device)
         db.session.commit()
         return redirect(url_for("devices.list_devices"))
-    return render_template("update_device.html", form=form, device=device)
+    return render_template("update_device.html", form=form)
 
 
 @device_blueprint.route("/list")
