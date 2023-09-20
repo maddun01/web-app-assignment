@@ -6,7 +6,11 @@ from flask_login import login_required
 from web_application import db
 from web_application.forms.network_form import AddNetwork, UpdateNetwork, DeleteNetwork
 from web_application.models.model import Network, Datatype
-from web_application.utils import auth_required, generate_network_dict
+from web_application.utils import (
+    auth_required,
+    generate_network_dict,
+    set_network_choices,
+)
 
 network_blueprint = Blueprint(
     "networks", __name__, template_folder="../templates/networks"
@@ -45,13 +49,7 @@ def update_network():
     form.datatype.choices = [
         (datatype.id, datatype.name) for datatype in Datatype.query.all()
     ]
-    form.network.choices = [
-        (
-            network.id,
-            f"{network.id}: {network.name}, {(Datatype.query.get(network.datatype_id)).name}, {network.provenance}, {network.format}, {network.date_added}",
-        )
-        for network in Network.query.all()
-    ]
+    form.network.choices = set_network_choices()
 
     if form.validate_on_submit():
         network = form.network.data
@@ -88,6 +86,7 @@ def list_networks():
 def delete_network():
     """Deletes a given network from the database"""
     form = DeleteNetwork()
+    form.id.choices = set_network_choices()
     if form.validate_on_submit():
         id = form.id.data
         network_del = db.session.get(Network, id)

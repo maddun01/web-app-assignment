@@ -35,5 +35,5 @@ class UpdateNetwork(FlaskForm):
 
 
 class DeleteNetwork(FlaskForm):
-    id = IntegerField("Network ID", validators=[DataRequired()])
+    id = SelectField("Network", validators=[DataRequired()])
     submit = SubmitField("Delete network")

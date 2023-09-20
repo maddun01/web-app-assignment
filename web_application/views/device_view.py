@@ -6,7 +6,11 @@ from flask_login import login_required
 from web_application import db
 from web_application.forms.device_form import AddDevice, UpdateDevice, DeleteDevice
 from web_application.models.model import Device, Ip
-from web_application.utils import auth_required, generate_device_dict
+from web_application.utils import (
+    auth_required,
+    generate_device_dict,
+    set_device_choices,
+)
 
 device_blueprint = Blueprint(
     "devices", __name__, template_folder="../templates/devices"
@@ -42,13 +46,7 @@ def update_device():
     """Updates a chosen device with the given data"""
     form = UpdateDevice()
     form.ip.choices = [(ip.id, ip.name) for ip in Ip.query.all()]
-    form.device.choices = [
-        (
-            device.id,
-            f"{device.id}: {device.name}, {device.type}, {device.os}, {(Ip.query.get(device.ip_id)).name}, {device.date_added}",
-        )
-        for device in Device.query.all()
-    ]
+    form.device.choices = set_device_choices()
     if form.validate_on_submit():
         device = form.device.data
         updated_device = Device.query.get(device)
@@ -84,6 +82,7 @@ def list_devices():
 def delete_device():
     """Deletes a given device from the database"""
     form = DeleteDevice()
+    form.id.choices = set_device_choices()
     if form.validate_on_submit():
         id = form.id.data
         device_del = db.session.get(Device, id)

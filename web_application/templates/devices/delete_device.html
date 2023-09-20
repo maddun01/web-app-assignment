@@ -16,11 +16,36 @@
             </div>
             <br>
             <br>
-            <div class="row">
-                {{form.submit(class="btn col-lg-6")}}
-                <a href="{{url_for('devices.list_devices')}}" class="btn col-lg-6">Cancel</a>
+
+            <!-- Button to trigger modal -->
+            <button type="button" class="btn col-lg-12" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Delete
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="Confirm" id="staticBackdropLabel">Are you sure you want to delete this?</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                {{form.submit(class="btn col-lg-6")}}
+                                <a href="{{url_for('devices.list_devices')}}" class="btn col-lg-6">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
 </div>
+
+
+
+
+
 {% endblock %}

@@ -7,6 +7,7 @@ from wtforms.validators import DataRequired, Optional
 
 class AddDevice(FlaskForm):
     """Inputs for a new device"""
+
     name = StringField("Device Name", validators=[DataRequired()])
     type = StringField("Device Type", validators=[DataRequired()])
     os = StringField("Device Operating System", validators=[DataRequired()])
@@ -16,6 +17,7 @@ class AddDevice(FlaskForm):
 
 class UpdateDevice(FlaskForm):
     """Optional inputs for updating a saved device configuration"""
+
     device = SelectField(
         "Select a Device", validators=[Optional()], filters=[lambda x: x or None]
     )
@@ -31,5 +33,5 @@ class UpdateDevice(FlaskForm):
 
 
 class DeleteDevice(FlaskForm):
-    id = IntegerField("Device ID", validators=[DataRequired()])
+    id = SelectField("Device", validators=[DataRequired()])
     submit = SubmitField("Delete Device")
