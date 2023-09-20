@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+
+<div class="jumbotron text-center p-5">
+    <h1>Welcome</h1>
+    <p>This web application is designed to aggregate all the information needed to start automated tests using
+        Jenkins</p>
+    <p>Users can view and manage device and network configurations before kicking off new builds on Jenkins.</p>
+    {% if current_user.is_authenticated %}
+    <p>Navigate to Devices or Networks to get started</p>
+    {% else %}
+    <p>Login or Register to get started</p>
+    {% endif %}
+
+</div>
+
+
+{% endblock %}

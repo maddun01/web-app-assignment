@@ -2,13 +2,44 @@
 
 {% extends "base.html" %}
 {% block content %}
-<div class="jumbotron">
+<div class="jumbotron text-center p-5">
     <h1>List of Networks</h1>
     <p>Here is a list of the networks in the database</p>
-    <ul>
-        {% for network in networks %}
-        <li>{{network}}</li>
-        {% endfor %}
-    </ul>
+    <div class="btn-group" role="group" aria-label="Default button group">
+        <a type="button" class="btn" href="{{url_for('networks.add_network')}}">Add Network</a>
+        <a type="button" class="btn" href="{{url_for('networks.update_network')}}">Update Network</a>
+        {% if current_user.is_admin == True %}
+        <a type="button" class="btn" href="{{url_for('networks.delete_network')}}">Delete Network</a>
+        {% endif %}
+    </div>
+</div>
+<div class="jumbotron">
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Datatype</th>
+                <th scope="col">Provenance</th>
+                <th scope="col">Format</th>
+                <th scope="col">Date Added</th>
+                <th scope="col">Date of Last Run</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for network in networks %}
+            <tr>
+                <td>{{network["id"]}}</td>
+                <td>{{network["name"]}}</td>
+                <td>{{network["datatype"]}}</td>
+                <td>{{network["provenance"]}}</td>
+                <td>{{network["format"]}}</td>
+                <td>{{network["date_added"]}}</td>
+                <td>{{network["last_run"]}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock %}

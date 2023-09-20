@@ -3,11 +3,14 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="jumbotron text-center p-5">
-    <h1>Add a New Device Configuration</h1>
-    <p>Enter the information below to add a new device</p>
+    <h1>Update a Device Configuration</h1>
+    <p>Select a Configuration from the dropdown, then enter the new information in the fields</p>
+    <p>Fields can be left blank to leave the data unchanged</p>
     <div class="col-xxl-4 col-lg-6 mx-auto">
         <form method="POST">
             {{form.hidden_tag()}}
+            {{form.device(class="form-select")}}
+            <br>
             <div class="form-floating">
                 {{form.name(class="form-control", placeholder="")}}
                 {{form.name.label}}
@@ -25,7 +28,7 @@
             <p>IP</p>
             {% for subfield in form.ip %}
             <div class="form-check form-check-inline">
-                <td>{{subfield(class="form-check-input", placeholder="")}}
+                <td>{{subfield(class="form-check-input")}}
                 </td>
                 <td>{{subfield.label}}</td>
             </div>

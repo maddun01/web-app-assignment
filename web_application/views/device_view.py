@@ -4,9 +4,9 @@ from flask import Blueprint, redirect, render_template, url_for
 from flask_login import login_required
 
 from web_application import db
-from web_application.forms.device_form import AddDevice, DeleteDevice
-from web_application.models.decorators import auth_required
-from web_application.models.model import Device
+from web_application.forms.device_form import AddDevice, UpdateDevice, DeleteDevice
+from web_application.models.model import Device, Ip
+from web_application.utils import auth_required, generate_device_dict
 
 device_blueprint = Blueprint(
     "devices", __name__, template_folder="../templates/devices"
@@ -16,8 +16,9 @@ device_blueprint = Blueprint(
 @device_blueprint.route("/add", methods=["GET", "POST"])
 @login_required
 def add_device():
-    """Adds a new network to the database given a valid form"""
+    """Adds a new device to the database given a valid form"""
     form = AddDevice()
+    form.ip.choices = [(ip.id, ip.name) for ip in Ip.query.all()]
 
     if form.validate_on_submit():
         name = form.name.data
@@ -35,12 +36,47 @@ def add_device():
         return render_template("add_device.html", form=form)
 
 
+@device_blueprint.route("/update", methods=["GET", "POST"])
+@login_required
+def update_device():
+    """Updates a chosen device with the given data"""
+    form = UpdateDevice()
+    form.ip.choices = [(ip.id, ip.name) for ip in Ip.query.all()]
+    form.device.choices = [
+        (
+            device.id,
+            f"{device.id}: {device.name}, {device.type}, {device.os}, {(Ip.query.get(device.ip_id)).name}, {device.date_added}",
+        )
+        for device in Device.query.all()
+    ]
+    if form.validate_on_submit():
+        device = form.device.data
+        updated_device = Device.query.get(device)
+
+        field_mapping = {
+            "name": ("name", form.name.data),
+            "type": ("type", form.type.data),
+            "os": ("os", form.os.data),
+            "ip_id": ("ip_id", form.ip.data),
+        }
+
+        for field, (device_field, data) in field_mapping.items():
+            if data is not None:
+                setattr(updated_device, device_field, data)
+
+        db.session.add(updated_device)
+        db.session.commit()
+        return redirect(url_for("devices.list_devices"))
+    return render_template("update_device.html", form=form)
+
+
 @device_blueprint.route("/list")
 @login_required
 def list_devices():
     """Displays all current entries in the devices table"""
     devices = Device.query.all()
-    return render_template("list_devices.html", devices=devices)
+    device_dicts = generate_device_dict(devices)
+    return render_template("list_devices.html", devices=device_dicts)
 
 
 @device_blueprint.route("/delete", methods=["GET", "POST"])
