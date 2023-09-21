@@ -6,16 +6,22 @@
     <h1>List of Devices</h1>
     <p>Here is a list of the current device configurations in the database</p>
     <div class="btn-group" role="group" aria-label="Default button group">
+        {% if devices|length == 0 %}
+        <a type="button" class="btn" href="{{url_for('devices.add_device')}}">Add Device</a>
+        {% else %}
         <a type="button" class="btn" href="{{url_for('devices.add_device')}}">Add Device</a>
         <a type="button" class="btn" href="{{url_for('devices.update_device')}}">Update Device</a>
         {% if current_user.is_admin == True %}
         <a type="button" class="btn" href="{{url_for('devices.delete_device')}}">Delete Device</a>
         {% endif %}
+        {% endif %}
     </div>
 </div>
 
 <div class="jumbotron">
-
+    {% if devices|length == 0 %}
+    <p class="text-center">There are no entries in the Device table</p>
+    {% else %}
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -40,5 +46,6 @@
             {% endfor %}
         </tbody>
     </table>
+    {% endif %}
 </div>
 {% endblock %}

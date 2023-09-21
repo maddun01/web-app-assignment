@@ -1,8 +1,8 @@
 import unittest
 
-from utils import clear_selected_table
 from web_application import app, db
 from web_application.models.model import Datatype
+from web_application.utils import clear_selected_table
 
 
 class DatatypeTests(unittest.TestCase):

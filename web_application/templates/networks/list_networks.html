@@ -6,15 +6,21 @@
     <h1>List of Networks</h1>
     <p>Here is a list of the networks in the database</p>
     <div class="btn-group" role="group" aria-label="Default button group">
+        {% if networks|length == 0 %}
+        <a type="button" class="btn" href="{{url_for('networks.add_network')}}">Add Network</a>
+        {% else %}
         <a type="button" class="btn" href="{{url_for('networks.add_network')}}">Add Network</a>
         <a type="button" class="btn" href="{{url_for('networks.update_network')}}">Update Network</a>
         {% if current_user.is_admin == True %}
         <a type="button" class="btn" href="{{url_for('networks.delete_network')}}">Delete Network</a>
         {% endif %}
+        {% endif %}
     </div>
 </div>
 <div class="jumbotron">
-
+    {% if networks|length == 0 %}
+    <p class="text-center">There are no entries in the Network table</p>
+    {% else %}
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -39,5 +45,6 @@
             {% endfor %}
         </tbody>
     </table>
+    {% endif %}
 </div>
 {% endblock %}

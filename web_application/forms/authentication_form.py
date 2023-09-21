@@ -1,11 +1,24 @@
 ## FORM
 
 from flask_wtf import FlaskForm
-from werkzeug.security import generate_password_hash, check_password_hash
-from wtforms import StringField, PasswordField, SubmitField, ValidationError
-from wtforms.validators import DataRequired, Email, EqualTo
+from wtforms import (
+    StringField,
+    PasswordField,
+    SubmitField,
+    SelectMultipleField,
+    ValidationError,
+    widgets,
+)
+from wtforms.validators import DataRequired, Email, EqualTo, Optional
 
 from web_application.models.model import User
+
+
+class MultiCheckboxField(SelectMultipleField):
+    """Creates a RadioField that can handle multiple selections"""
+
+    widget = widgets.ListWidget(prefix_label=False)
+    option_widget = widgets.CheckboxInput()
 
 
 class LoginForm(FlaskForm):
@@ -54,3 +67,13 @@ class RegistrationForm(FlaskForm):
         "Checks if a given username is already in use"
         if User.query.filter_by(username=self.username.data).first():
             raise ValidationError("Username is already taken")
+
+
+class PopulateTableForm(FlaskForm):
+    """Gathers the selected tables to populate"""
+
+    tables = MultiCheckboxField(
+        choices=[("1", "Datatypes"), ("2", "Ips")],
+        validators=[Optional()],
+    )
+    submit = SubmitField("Populate Tables")

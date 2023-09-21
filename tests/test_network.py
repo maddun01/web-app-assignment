@@ -1,9 +1,9 @@
 import datetime
 import unittest
 
-from utils import clear_selected_table
 from web_application import app, db
 from web_application.models.model import Network, Datatype
+from web_application.utils import clear_selected_table
 
 
 class NetworkTests(unittest.TestCase):
@@ -74,3 +74,4 @@ class NetworkTests(unittest.TestCase):
             # Assert
             test = network.query.filter_by(name=name)
             self.assertEqual(test.all(), [])
+            clear_selected_table(Datatype)

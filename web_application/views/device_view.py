@@ -26,13 +26,13 @@ def add_device():
 
     if form.validate_on_submit():
         name = form.name.data
-        type = form.type.data
+        device_type = form.type.data
         os = form.os.data
         ip = form.ip.data
         date_added = datetime.datetime.now()
         last_run = datetime.datetime.now()
 
-        new_device = Device(name, type, os, ip, date_added, last_run)
+        new_device = Device(name, device_type, os, ip, date_added, last_run)
         db.session.add(new_device)
         db.session.commit()
         return redirect(url_for("devices.list_devices"))

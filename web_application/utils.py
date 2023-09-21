@@ -2,7 +2,7 @@ from flask import current_app, redirect, url_for
 from flask_login import current_user
 from functools import wraps
 
-from web_application import login_manager
+from web_application import db, login_manager
 from web_application.models.model import Datatype, Device, Ip, Network
 
 
@@ -85,3 +85,60 @@ def set_network_choices():
         )
         for network in Network.query.all()
     ]
+
+
+def clear_selected_table(model):
+    """Deletes all records in a given table"""
+    model.query.delete()
+    db.session.commit()
+
+
+def check_contents_of_table(table):
+    """Checks the given table is not populated.
+    This is to prevent the application adding duplicate data if the url is manually accessed
+    """
+    records = table.query.all()
+    return len(records)
+
+
+def populate_tables(tables: list):
+    """Adds example entries to the database"""
+    # match-case statement to call the correct function
+    for table in tables:
+        match table:
+            case "1":
+                populate_datatypes()
+            case "2":
+                populate_ips()
+            # case "2":
+            #     populate_devices()
+            # case "3":
+            #     populate_ips()
+            # case "4":
+            #     populate_networks()
+
+
+def populate_datatypes():
+    """Adds example datatypes to the table"""
+    current_records = check_contents_of_table(Datatype)
+    if current_records == 0:
+        f16 = Datatype("f16")
+        f32 = Datatype("f32")
+        int8 = Datatype("int8")
+        uint8 = Datatype("uint8")
+        db.session.add_all([f16, f32, int8, uint8])
+        db.session.commit()
+
+
+def populate_ips():
+    """Adds example ips to the table"""
+    current_records = check_contents_of_table(Ip)
+    if current_records == 0:
+        a55 = Ip("A55")
+        a76 = Ip("A76")
+        g57 = Ip("G57")
+        g77 = Ip("G77")
+        x1 = Ip("X1")
+        x2 = Ip("X2")
+        db.session.add_all([a55, a76, g57, g77, x1, x2])
+        db.session.commit()

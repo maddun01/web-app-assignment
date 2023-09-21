@@ -3,8 +3,13 @@ from flask import Blueprint, redirect, render_template, url_for, request
 from flask_login import login_user, login_required, logout_user
 
 from web_application import db
-from web_application.forms.authentication_form import LoginForm, RegistrationForm
+from web_application.forms.authentication_form import (
+    LoginForm,
+    RegistrationForm,
+    PopulateTableForm,
+)
 from web_application.models.model import User
+from web_application.utils import auth_required, populate_tables
 
 authentication_blueprint = Blueprint(
     "authentication", __name__, template_folder="../templates/authentication"
@@ -52,3 +57,14 @@ def register():
 
         return redirect(url_for("authentication.login"))
     return render_template("register.html", form=form)
+
+
+@authentication_blueprint.route("/populate", methods=["GET", "POST"])
+@auth_required()
+def populate_db_tables():
+    """Populates selected db tables with example entries"""
+    form = PopulateTableForm()
+    if form.validate_on_submit():
+        populate_tables(form.tables.data)
+        return redirect(url_for("index"))
+    return render_template("populate_tables.html", form=form)
