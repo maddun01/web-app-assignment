@@ -5,6 +5,16 @@
 <div class="jumbotron text-center p-5">
     <h1>Add a New Network Configuration</h1>
     <br>
+    {% if form.datatype.choices|length == 0 %}
+    <p class="text-center">There are no entries in the Datatype table</p>
+    <p class="text-center">This means you will not be able to add a Network configuration with a referenced Datatype</p>
+    {% if current_user.is_admin == True %}
+    <a href="{{url_for('authentication.populate_db_tables')}}" class="btn col-lg-6">Click here to populate database
+        tables</a>
+    {% else %}
+    <p class="text-center">To fix this, log in as an administrator</p>
+    {% endif %}
+    {% else %}
     <p>Enter the information below to add a new network</p>
     <br>
     <div class="col-xxl-4 col-lg-6 mx-auto">
@@ -39,5 +49,6 @@
             </div>
         </form>
     </div>
+    {% endif %}
 </div>
 {% endblock %}

@@ -5,6 +5,16 @@
 <div class="jumbotron text-center p-5">
     <h1>Add a New Device Configuration</h1>
     <br>
+    {% if form.ip.choices|length == 0 %}
+    <p class="text-center">There are no entries in the IP table</p>
+    <p class="text-center">This means you will not be able to add a Device configuration with a referenced IP</p>
+    {% if current_user.is_admin == True %}
+    <a href="{{url_for('authentication.populate_db_tables')}}" class="btn col-lg-6">Click here to populate database
+        tables</a>
+    {% else %}
+    <p class="text-center">To fix this, log in as an administrator</p>
+    {% endif %}
+    {% else %}
     <p>Enter the information below to add a new device</p>
     <br>
     <div class="col-xxl-4 col-lg-6 mx-auto">
@@ -39,6 +49,8 @@
                 <a href="{{url_for('devices.list_devices')}}" class="btn col-lg-6">Cancel</a>
             </div>
         </form>
+
     </div>
+    {% endif %}
 </div>
 {% endblock %}
