@@ -4,7 +4,7 @@
 {% block content %}
 <div class="jumbotron text-center p-5">
     <h1>List of Devices</h1>
-    <p>Here is a list of the current device configurations in the database</p>
+    <p>Here is a list of the current Device configurations in the database</p>
     <div class="btn-group" role="group" aria-label="Default button group">
         {% if devices|length == 0 %}
         <a type="button" class="btn" href="{{url_for('devices.add_device')}}">Add Device</a>

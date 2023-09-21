@@ -7,7 +7,7 @@
     <br>
     {% if form.datatype.choices|length == 0 %}
     <p class="text-center">There are no entries in the Datatype table</p>
-    <p class="text-center">This means you will not be able to add a network configuration with a referenced Datatype</p>
+    <p class="text-center">This means you will not be able to add a Network configuration with a referenced Datatype</p>
     {% if current_user.is_admin == True %}
     <a href="{{url_for('authentication.populate_db_tables')}}" class="btn col-lg-6">Click here to populate database
         tables</a>

@@ -110,12 +110,6 @@ def populate_tables(tables: list):
                 populate_datatypes()
             case "2":
                 populate_ips()
-            # case "2":
-            #     populate_devices()
-            # case "3":
-            #     populate_ips()
-            # case "4":
-            #     populate_networks()
 
 
 def populate_datatypes():
