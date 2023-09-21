@@ -1,3 +1,5 @@
+## View for displaying kickoff run page
+
 import datetime
 
 from flask import Blueprint, redirect, render_template, url_for

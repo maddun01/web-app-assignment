@@ -1,4 +1,4 @@
-## Views for disaplying various device pages
+## Views for displaying various device pages
 
 import datetime
 from flask import Blueprint, redirect, render_template, url_for

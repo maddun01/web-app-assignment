@@ -1,4 +1,4 @@
-## Views for disaplying various login pages
+## Views for displaying various login pages
 
 from flask import Blueprint, redirect, render_template, url_for, request
 from flask_login import login_user, login_required, logout_user

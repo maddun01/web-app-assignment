@@ -1,4 +1,4 @@
-## Views for disaplying various network pages
+## Views for displaying various network pages
 
 import datetime
 from flask import Blueprint, redirect, render_template, url_for
