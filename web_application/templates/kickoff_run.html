@@ -1,0 +1,31 @@
+<!-- Template for kicking off new Jenkins runs -->
+
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbotron text-center p-5">
+    <h1>Kickoff a Jenkins Run</h1>
+    <br>
+    <p>Select a Device and a Network, then click start run</p>
+    <br>
+    <div class="d-inline-flex gap-2 mb-5">
+        <form method="POST">
+            {{form.hidden_tag()}}
+            <div class="form-floating">
+                {{form.device_id(class="form-control", placeholder="")}}
+                {{form.device_id.label}}
+            </div>
+            <br>
+            <div class="form-floating">
+                {{form.network_id(class="form-control", placeholder="")}}
+                {{form.network_id.label}}
+            </div>
+            <br>
+
+            <div class="row">
+                {{form.submit(class="btn col-lg-6")}}
+                <a href="{{url_for('devices.list_devices')}}" class="btn col-lg-6">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
