@@ -1,11 +1,16 @@
 # System Analysis Configurations Dashboard
 
 ## Overview
-This web application is designed to aggregate all the information needed to start automated tests using Jenkins
+This web application is designed to aggregate all the information needed to start automated tests using Jenkins.
 
 Users can view and manage device and network configurations before kicking off new builds on Jenkins.
 
+## Hosting
+This application is hosted on Python Anywhere, a free online hosting tool.
+
 ## Setup
+To run the application locally, follow these steps:
+
 1. Navigate to the `web-app-assignment/` directory in a terminal
 2. Install the requirements for this application
     ```commandline
@@ -32,9 +37,10 @@ Users can view and manage device and network configurations before kicking off n
 
 5. Run the setup file to populate the database with example data
     ```commandline
-    python database_setup.py
+    python populate_database.py
     ```
-
+Note: While populating the database tables can be done through the web application, an admin account is required.
+It's recommended to run the full setup script
 ## Running the application
 
 1. Run `app.py` to launch the dashboard
