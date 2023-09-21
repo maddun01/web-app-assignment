@@ -1,3 +1,5 @@
+## Tests for the Datatype model
+
 import unittest
 
 from web_application import app, db
@@ -6,7 +8,7 @@ from web_application.utils import clear_selected_table
 
 
 class DatatypeTests(unittest.TestCase):
-    """Unittests for the Datatype database model. Note: running tests will clear the database tables"""
+    """Unittests for the Datatype database model. Note: running tests will clear the database tables."""
 
     def test_create_datatype(self):
         """Creates a new datatype object and adds it to the db.

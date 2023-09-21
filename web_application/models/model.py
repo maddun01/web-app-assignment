@@ -1,3 +1,5 @@
+## Database models
+
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -6,39 +8,43 @@ from web_application import db, login_manager
 
 @login_manager.user_loader
 def load_user(user_id):
-    """Loads the currently authenicated user"""
+    """Loads the currently authenticated user."""
     return User.query.get(user_id)
 
 
 class User(db.Model, UserMixin):
-    """Create a table for users in the db"""
+    """Create a table for users in the db."""
 
-    # overrides the default table name
+    # Overrides the default table name
     __tablename__ = "users"
 
+    # Table fields
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(64), unique=True, index=True)
     username = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128))
     is_admin = db.Column(db.Boolean, default=False)
 
+    # Init function for creating new objects
     def __init__(self, email, username, password):
         self.email = email
         self.username = username
         self.password_hash = generate_password_hash(password)
 
     def check_password(self, password):
+        """Checks the given password matches the hashed entry in the db."""
         return check_password_hash(self.password_hash, password)
 
 
 class Datatype(db.Model):
-    """Create a table for datatypes in the db"""
+    """Create a table for datatypes in the db."""
 
     __tablename__ = "datatypes"
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, unique=True)
-    # ONE TO MANY
+
+    # One to many relationship between datatype and network
     datatype = db.relationship("Network", backref="datatype", lazy="dynamic")
 
     def __init__(self, name):
@@ -46,14 +52,15 @@ class Datatype(db.Model):
 
 
 class Device(db.Model):
-    """Create a table for devices in the db"""
+    """Create a table for devices in the db."""
 
     __tablename__ = "devices"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, nullable=False)
     type = db.Column(db.Text, nullable=False)
     os = db.Column(db.Text, nullable=False)
-    # MANY TO ONE
+
+    # Many to one relationship between device and ip
     ip_id = db.Column(db.Integer, db.ForeignKey("ips.id"), nullable=False)
     date_added = db.Column(db.DateTime)
     last_run = db.Column(db.DateTime, nullable=True)
@@ -68,12 +75,11 @@ class Device(db.Model):
 
 
 class Ip(db.Model):
-    """Create a table for ips in the db"""
+    """Create a table for ips in the db."""
 
     __tablename__ = "ips"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, unique=True)
-    # ONE TO MANY
     device = db.relationship("Device", backref="ip", lazy="dynamic")
 
     def __init__(self, name):
@@ -81,12 +87,11 @@ class Ip(db.Model):
 
 
 class Network(db.Model):
-    """Create a table for networks in the db"""
+    """Create a table for networks in the db."""
 
     __tablename__ = "networks"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text)
-    # MANY TO ONE
     datatype_id = db.Column(db.Integer, db.ForeignKey("datatypes.id"))
     provenance = db.Column(db.Text)
     format = db.Column(db.Text)

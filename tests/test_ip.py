@@ -1,3 +1,5 @@
+## Tests for the Ip model
+
 import unittest
 
 from web_application import app, db
@@ -6,7 +8,7 @@ from web_application.utils import clear_selected_table
 
 
 class IpTests(unittest.TestCase):
-    """Unittests for the Ip database model. Note: running tests will clear the database tables"""
+    """Unittests for the Ip database model. Note: running tests will clear the database tables."""
 
     def test_create_ip(self):
         """Creates a new ip object and adds it to the db.

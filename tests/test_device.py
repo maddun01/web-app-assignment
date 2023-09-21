@@ -1,3 +1,5 @@
+## Tests for the Device model
+
 import datetime
 import unittest
 
@@ -7,7 +9,7 @@ from web_application.utils import clear_selected_table
 
 
 class DeviceTests(unittest.TestCase):
-    """Unittests for the Device database model. Note: running tests will clear the database tables"""
+    """Unittests for the Device database model. Note: running tests will clear the database tables."""
 
     def test_create_device(self):
         """Creates a new device object and adds it to the db.
@@ -15,14 +17,14 @@ class DeviceTests(unittest.TestCase):
         with app.app_context():
             # Arrange
 
-            # create an ip (to add the foreign key to the device)
+            # Create an ip (to add the foreign key to the device)
             clear_selected_table(Ip)
             ip_name = "test"
             ip = Ip(ip_name)
             db.session.add(ip)
             db.session.commit()
 
-            # create a device
+            # Create a device
             clear_selected_table(Device)
             name = "test device"
             type = "test type"
@@ -45,14 +47,14 @@ class DeviceTests(unittest.TestCase):
         with app.app_context():
             # Arrange
 
-            # create an ip (to add the foreign key to the device)
+            # Create an ip (to add the foreign key to the device)
             clear_selected_table(Ip)
             ip_name = "test"
             ip = Ip(ip_name)
             db.session.add(ip)
             db.session.commit()
 
-            # create a device
+            # Create a device
             clear_selected_table(Device)
             name = "test device"
             type = "test type"
@@ -60,6 +62,8 @@ class DeviceTests(unittest.TestCase):
             ip_id = Ip.query.filter_by(name=ip_name).first().id
             date_added = datetime.datetime.now()
             device = Device(name, type, os, ip_id, date_added, None)
+
+            # Add device to the table and check it exists
             db.session.add(device)
             db.session.commit()
             devices_list = Device.query.all()
