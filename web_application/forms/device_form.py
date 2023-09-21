@@ -1,4 +1,4 @@
-## FORM
+## Form for collecting user inputs for creating, updating and deleting devices
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, RadioField, SelectField, SubmitField
@@ -6,7 +6,7 @@ from wtforms.validators import DataRequired, Optional
 
 
 class AddDevice(FlaskForm):
-    """Inputs for a new device"""
+    """Inputs for a new device."""
 
     name = StringField("Device Name", validators=[DataRequired()])
     type = StringField("Device Type", validators=[DataRequired()])
@@ -16,7 +16,7 @@ class AddDevice(FlaskForm):
 
 
 class UpdateDevice(FlaskForm):
-    """Optional inputs for updating a saved device configuration"""
+    """Optional inputs for updating a saved device configuration."""
 
     device = SelectField(
         "Select a Device", validators=[Optional()], filters=[lambda x: x or None]
@@ -33,5 +33,7 @@ class UpdateDevice(FlaskForm):
 
 
 class DeleteDevice(FlaskForm):
+    """Gets the id of a selected device to delete."""
+
     id = SelectField("Device", validators=[DataRequired()])
     submit = SubmitField("Delete Device")

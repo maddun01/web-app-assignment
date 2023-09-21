@@ -1,4 +1,5 @@
-## VIEW
+## Views for disaplying various network pages
+
 import datetime
 from flask import Blueprint, redirect, render_template, url_for
 from flask_login import login_required
@@ -20,7 +21,7 @@ network_blueprint = Blueprint(
 @network_blueprint.route("/add", methods=["GET", "POST"])
 @login_required
 def add_network():
-    """Adds a new network to the database given a valid form"""
+    """Adds a new network to the database given a valid form."""
     form = AddNetwork()
     form.datatype.choices = [
         (datatype.id, datatype.name) for datatype in Datatype.query.all()
@@ -31,9 +32,8 @@ def add_network():
         provenance = form.provenance.data
         format = form.format.data
         date_added = datetime.datetime.now()
-        last_run = datetime.datetime.now()
 
-        new_network = Network(name, datatype, provenance, format, date_added, last_run)
+        new_network = Network(name, datatype, provenance, format, date_added, None)
         db.session.add(new_network)
         db.session.commit()
         return redirect(url_for("networks.list_networks"))
@@ -44,7 +44,7 @@ def add_network():
 @network_blueprint.route("/update", methods=["GET", "POST"])
 @login_required
 def update_network():
-    """Updates a chosen network with the given data"""
+    """Updates a chosen network with the given data."""
     form = UpdateNetwork()
     form.datatype.choices = [
         (datatype.id, datatype.name) for datatype in Datatype.query.all()
@@ -55,6 +55,7 @@ def update_network():
         network = form.network.data
         updated_network = Network.query.get(network)
 
+        # Mapping to replace bulky "if not None" statements
         field_mapping = {
             "name": ("name", form.name.data),
             "datatype_id": ("datatype_id", form.datatype.data),
@@ -62,6 +63,7 @@ def update_network():
             "format": ("format", form.format.data),
         }
 
+        # Sets each of the network fields to the new data, if given
         for field, (network_field, data) in field_mapping.items():
             if data is not None:
                 setattr(updated_network, network_field, data)
@@ -75,7 +77,7 @@ def update_network():
 @network_blueprint.route("/list")
 @login_required
 def list_networks():
-    """Displays all current entries in the networks table"""
+    """Displays all current entries in the networks table."""
     networks = Network.query.all()
     network_dicts = generate_network_dict(networks)
     return render_template("list_networks.html", networks=network_dicts)
@@ -84,7 +86,7 @@ def list_networks():
 @network_blueprint.route("/delete", methods=["GET", "POST"])
 @auth_required()
 def delete_network():
-    """Deletes a given network from the database"""
+    """Deletes a given network from the database."""
     form = DeleteNetwork()
     form.id.choices = set_network_choices()
     if form.validate_on_submit():

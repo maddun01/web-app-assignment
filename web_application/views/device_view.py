@@ -1,4 +1,5 @@
-## VIEW
+## Views for disaplying various device pages
+
 import datetime
 from flask import Blueprint, redirect, render_template, url_for
 from flask_login import login_required
@@ -20,7 +21,7 @@ device_blueprint = Blueprint(
 @device_blueprint.route("/add", methods=["GET", "POST"])
 @login_required
 def add_device():
-    """Adds a new device to the database given a valid form"""
+    """Adds a new device to the database given a valid form."""
     form = AddDevice()
     form.ip.choices = [(ip.id, ip.name) for ip in Ip.query.all()]
 
@@ -30,9 +31,8 @@ def add_device():
         os = form.os.data
         ip = form.ip.data
         date_added = datetime.datetime.now()
-        last_run = datetime.datetime.now()
 
-        new_device = Device(name, device_type, os, ip, date_added, last_run)
+        new_device = Device(name, device_type, os, ip, date_added, None)
         db.session.add(new_device)
         db.session.commit()
         return redirect(url_for("devices.list_devices"))
@@ -43,7 +43,7 @@ def add_device():
 @device_blueprint.route("/update", methods=["GET", "POST"])
 @login_required
 def update_device():
-    """Updates a chosen device with the given data"""
+    """Updates a chosen device with the given data."""
     form = UpdateDevice()
     form.ip.choices = [(ip.id, ip.name) for ip in Ip.query.all()]
     form.device.choices = set_device_choices()
@@ -51,6 +51,7 @@ def update_device():
         device = form.device.data
         updated_device = Device.query.get(device)
 
+        # Mapping to replace bulky "if not None" statements
         field_mapping = {
             "name": ("name", form.name.data),
             "type": ("type", form.type.data),
@@ -58,6 +59,7 @@ def update_device():
             "ip_id": ("ip_id", form.ip.data),
         }
 
+        # Sets each of the device fields to the new data, if given
         for field, (device_field, data) in field_mapping.items():
             if data is not None:
                 setattr(updated_device, device_field, data)
@@ -71,7 +73,7 @@ def update_device():
 @device_blueprint.route("/list")
 @login_required
 def list_devices():
-    """Displays all current entries in the devices table"""
+    """Displays all current entries in the devices table."""
     devices = Device.query.all()
     device_dicts = generate_device_dict(devices)
     return render_template("list_devices.html", devices=device_dicts)
@@ -80,7 +82,7 @@ def list_devices():
 @device_blueprint.route("/delete", methods=["GET", "POST"])
 @auth_required()
 def delete_device():
-    """Deletes a given device from the database"""
+    """Deletes a given device from the database."""
     form = DeleteDevice()
     form.id.choices = set_device_choices()
     if form.validate_on_submit():

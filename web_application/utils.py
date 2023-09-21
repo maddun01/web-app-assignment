@@ -1,3 +1,7 @@
+## Collection of necessary functions for various parts of the application
+
+import datetime
+
 from flask import current_app, redirect, url_for
 from flask_login import current_user
 from functools import wraps
@@ -5,16 +9,18 @@ from functools import wraps
 from web_application import db, login_manager
 from web_application.models.model import Datatype, Device, Ip, Network
 
+DATETIME_FORMAT = "%H:%M:%S %d/%m/%Y"
 
-# used when an unauthorized user attempts to access restricted pages
+
+# Used when an unauthorized user attempts to access restricted pages
 @login_manager.unauthorized_handler
 def unauthorized_callback():
-    """Overrides flask-login's automatic redirect with the path for the homepage"""
+    """Overrides flask-login's automatic redirect with the path for the homepage."""
     return redirect(url_for("index"))
 
 
 def auth_required():
-    """Decorator to check the role of a user and ensure they are logged in"""
+    """Decorator to check the role of a user and ensure they are logged in."""
 
     def wrapper(fn):
         @wraps(fn)
@@ -32,42 +38,59 @@ def auth_required():
 
 
 def generate_device_dict(database_list):
-    """Generates a device dictionary that can be displayed"""
+    """Generates a device dictionary that can be displayed."""
     device_list = []
     for device in database_list:
         ip_name = Ip.query.filter_by(id=device.ip_id).first()
+
+        if device.last_run == None:
+            last_run = None
+        else:
+            last_run = datetime.datetime.strftime(device.last_run, DATETIME_FORMAT)
+
         dictionary = {
             "id": device.id,
             "name": device.name,
             "type": device.type,
             "os": device.os,
             "ip": ip_name.name,
-            "date_added": device.date_added,
-            "last_run": device.last_run,
+            "date_added": datetime.datetime.strftime(
+                device.date_added, DATETIME_FORMAT
+            ),
+            "last_run": last_run,
         }
         device_list.append(dictionary)
     return device_list
 
 
 def generate_network_dict(database_list):
-    """Generates a network dictionary that can be displayed"""
+    """Generates a network dictionary that can be displayed."""
     network_list = []
     for network in database_list:
         datatype_name = Datatype.query.filter_by(id=network.datatype_id).first()
+
+        if network.last_run == None:
+            last_run = None
+        else:
+            last_run = datetime.datetime.strftime(network.last_run, DATETIME_FORMAT)
+
         dictionary = {
             "id": network.id,
             "name": network.name,
             "datatype": datatype_name.name,
             "provenance": network.provenance,
             "format": network.format,
-            "date_added": network.date_added,
-            "last_run": network.last_run,
+            "date_added": datetime.datetime.strftime(
+                network.date_added, DATETIME_FORMAT
+            ),
+            "last_run": last_run,
         }
         network_list.append(dictionary)
     return network_list
 
 
 def set_device_choices():
+    """Sets the dropdown choices for deleting devices by pulling from the db."""
     return [
         (
             device.id,
@@ -78,6 +101,7 @@ def set_device_choices():
 
 
 def set_network_choices():
+    """Sets the dropdown choices for deleting networks by pulling from the db."""
     return [
         (
             network.id,
@@ -88,21 +112,21 @@ def set_network_choices():
 
 
 def clear_selected_table(model):
-    """Deletes all records in a given table"""
+    """Deletes all records in a given table."""
     model.query.delete()
     db.session.commit()
 
 
 def check_contents_of_table(table):
     """Checks the given table is not populated.
-    This is to prevent the application adding duplicate data if the url is manually accessed
+    This is to prevent the application attempting to add duplicate data if the url is manually accessed.
     """
     records = table.query.all()
     return len(records)
 
 
 def populate_tables(tables: list):
-    """Adds example entries to the database"""
+    """Adds example entries to the database."""
     # match-case statement to call the correct function
     for table in tables:
         match table:
@@ -113,7 +137,7 @@ def populate_tables(tables: list):
 
 
 def populate_datatypes():
-    """Adds example datatypes to the table"""
+    """Adds example datatypes to the table."""
     current_records = check_contents_of_table(Datatype)
     if current_records == 0:
         f16 = Datatype("f16")
@@ -125,7 +149,7 @@ def populate_datatypes():
 
 
 def populate_ips():
-    """Adds example ips to the table"""
+    """Adds example ips to the table."""
     current_records = check_contents_of_table(Ip)
     if current_records == 0:
         a55 = Ip("A55")

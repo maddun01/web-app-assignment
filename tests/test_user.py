@@ -1,3 +1,5 @@
+## Tests for the User model
+
 import unittest
 
 from web_application import app, db
@@ -7,7 +9,7 @@ from werkzeug.security import check_password_hash
 
 
 class UserTests(unittest.TestCase):
-    """Unittests for the User database model. Note: running tests will clear the database tables"""
+    """Unittests for the User database model. Note: running tests will clear the database tables."""
 
     def test_create_user(self):
         """Creates a new user object and adds it to the db.
@@ -55,7 +57,7 @@ class UserTests(unittest.TestCase):
             self.assertEqual(test.all(), [])
 
     def test_check_password_true(self):
-        """Tests the check_password User model function"""
+        """Tests the check_password User model function."""
         with app.app_context():
             # Arrange
             clear_selected_table(User)
@@ -73,7 +75,7 @@ class UserTests(unittest.TestCase):
             self.assertTrue(result)
 
     def test_check_password_false(self):
-        """Tests the check_password User model function"""
+        """Tests the check_password User model function."""
         with app.app_context():
             # Arrange
             clear_selected_table(User)

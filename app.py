@@ -1,3 +1,6 @@
+## Main file for the application
+## Consult the README for instructions
+
 from flask import render_template
 from web_application import app
 

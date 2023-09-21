@@ -1,4 +1,4 @@
-## FORM
+## Form for collecting user inputs for creating, updating and deleting devices
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, RadioField, SelectField, SubmitField
@@ -6,7 +6,7 @@ from wtforms.validators import DataRequired, Optional
 
 
 class AddNetwork(FlaskForm):
-    """Inputs for adding a new network"""
+    """Inputs for adding a new network."""
 
     name = StringField("Network Name", validators=[DataRequired()])
     datatype = RadioField(validators=[DataRequired()])
@@ -16,7 +16,7 @@ class AddNetwork(FlaskForm):
 
 
 class UpdateNetwork(FlaskForm):
-    """Optional inputs for updating a saved network configuration"""
+    """Optional inputs for updating a saved network configuration."""
 
     network = SelectField(
         "Select a Network", validators=[Optional()], filters=[lambda x: x or None]
@@ -35,5 +35,7 @@ class UpdateNetwork(FlaskForm):
 
 
 class DeleteNetwork(FlaskForm):
+    """Gets the id of a network to delete."""
+
     id = SelectField("Network", validators=[DataRequired()])
     submit = SubmitField("Delete network")

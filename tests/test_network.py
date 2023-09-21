@@ -1,3 +1,5 @@
+## Tests for the Network model
+
 import datetime
 import unittest
 
@@ -7,7 +9,7 @@ from web_application.utils import clear_selected_table
 
 
 class NetworkTests(unittest.TestCase):
-    """Unittests for the Network database model. Note: running tests will clear the database tables"""
+    """Unittests for the Network database model. Note: running tests will clear the database tables."""
 
     def test_create_network(self):
         """Creates a new network object and adds it to the db.
@@ -15,14 +17,14 @@ class NetworkTests(unittest.TestCase):
         with app.app_context():
             # Arrange
 
-            # create a datatype (to add the foreign key to the network)
+            # Create a datatype (to add the foreign key to the network)
             clear_selected_table(Datatype)
             datatype_name = "test"
             datatype = Datatype(datatype_name)
             db.session.add(datatype)
             db.session.commit()
 
-            # create a network
+            # Create a network
             clear_selected_table(Network)
             name = "test network"
             datatype_id = Datatype.query.filter_by(name=datatype_name).first().id
@@ -45,14 +47,14 @@ class NetworkTests(unittest.TestCase):
         with app.app_context():
             # Arrange
 
-            # create a datatype
+            # Create a datatype
             clear_selected_table(Datatype)
             datatype_name = "test"
             datatype = Datatype(datatype_name)
             db.session.add(datatype)
             db.session.commit()
 
-            # create a network
+            # Create a network
             clear_selected_table(Network)
             name = "test network"
             datatype_id = Datatype.query.filter_by(name=datatype_name).first().id
@@ -60,6 +62,8 @@ class NetworkTests(unittest.TestCase):
             format = "test format"
             date_added = datetime.datetime.now()
             network = Network(name, datatype_id, provenance, format, date_added, None)
+
+            # Add network to database and check it exists
             db.session.add(network)
             db.session.commit()
             networks_list = Network.query.all()
