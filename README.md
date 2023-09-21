@@ -8,6 +8,8 @@ Users can view and manage device and network configurations before kicking off n
 ## Hosting
 This application is hosted on Python Anywhere, a free online hosting tool.
 
+This can be accessed at https://maddyd.eu.pythonanywhere.com/
+
 ## Setup
 To run the application locally, follow these steps:
 
