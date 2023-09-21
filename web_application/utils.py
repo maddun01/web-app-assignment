@@ -37,17 +37,22 @@ def auth_required():
     return wrapper
 
 
+def format_last_run(field_last_run):
+    """Handles None values for the last_run field."""
+    if field_last_run != None:
+        last_run = datetime.datetime.strftime(field_last_run, DATETIME_FORMAT)
+    else:
+        last_run = None
+    return last_run
+
+
 def generate_device_dict(database_list):
     """Generates a device dictionary that can be displayed."""
     device_list = []
     for device in database_list:
         ip_name = Ip.query.filter_by(id=device.ip_id).first()
 
-        if device.last_run == None:
-            last_run = None
-        else:
-            last_run = datetime.datetime.strftime(device.last_run, DATETIME_FORMAT)
-
+        last_run = format_last_run(device.last_run)
         dictionary = {
             "id": device.id,
             "name": device.name,
@@ -69,11 +74,7 @@ def generate_network_dict(database_list):
     for network in database_list:
         datatype_name = Datatype.query.filter_by(id=network.datatype_id).first()
 
-        if network.last_run == None:
-            last_run = None
-        else:
-            last_run = datetime.datetime.strftime(network.last_run, DATETIME_FORMAT)
-
+        last_run = format_last_run(network.last_run)
         dictionary = {
             "id": network.id,
             "name": network.name,
