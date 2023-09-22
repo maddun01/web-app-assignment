@@ -41,8 +41,8 @@ To run the application locally, follow these steps:
     ```commandline
     python populate_database.py
     ```
-Note: While populating the database tables can be done through the web application, an admin account is required.
-It's recommended to run the full setup script
+Note: While the web application can be run without populating the database tables, the only way to add an administrator account is through this script.
+It's recommended to run the full setup script, although
 ## Running the application
 
 1. Run `app.py` to launch the dashboard
@@ -50,3 +50,12 @@ It's recommended to run the full setup script
     python app.py
     ```
     The dashboard will be hosted on `http://127.0.0.1:5000/`
+
+
+## Running the tests
+
+The integration tests have been written using the `unittest` python module.
+
+Visual Studio Code has a built-in testing suite that will run the tests.
+
+To configure it, set the test folder to `test/` and the pattern to look for as `test_*.py`
