@@ -42,7 +42,7 @@ To run the application locally, follow these steps:
     python populate_database.py
     ```
 Note: While the web application can be run without populating the database tables, the only way to add an administrator account is through this script.
-It's recommended to run the full setup script, although
+It's recommended to run the full setup script.
 ## Running the application
 
 1. Run `app.py` to launch the dashboard
