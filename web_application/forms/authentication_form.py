@@ -1,5 +1,7 @@
 """Form for collecting user inputs for registering, logging in and populating "hidden" databases."""
 
+# pylint: disable=W0613
+
 from flask_wtf import FlaskForm
 from wtforms import (
     StringField,

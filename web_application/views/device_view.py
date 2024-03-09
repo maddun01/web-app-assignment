@@ -1,5 +1,7 @@
 """Views for displaying various device pages."""
 
+# pylint: disable=R1705
+
 import datetime
 from flask import Blueprint, redirect, render_template, url_for
 from flask_login import login_required
@@ -60,7 +62,10 @@ def update_device():
         }
 
         # Sets each of the device fields to the new data, if given
-        for field, (device_field, data) in field_mapping.items():
+        for field, (  # pylint: disable=W0612
+            device_field,
+            data,
+        ) in field_mapping.items():
             if data is not None:
                 setattr(updated_device, device_field, data)
 
@@ -86,8 +91,8 @@ def delete_device():
     form = DeleteDevice()
     form.id.choices = set_device_choices()
     if form.validate_on_submit():
-        id = form.id.data
-        device_del = db.session.get(Device, id)
+        device_id = form.id.data
+        device_del = db.session.get(Device, device_id)
         db.session.delete(device_del)
         db.session.commit()
         return redirect(url_for("devices.list_devices"))

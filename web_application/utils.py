@@ -58,7 +58,7 @@ def generate_device_dict(database_list):
         dictionary = {
             "id": device.id,
             "name": device.name,
-            "type": device.type,
+            "type": device.device_type,
             "os": device.os,
             "ip": ip_name.name,
             "date_added": datetime.datetime.strftime(
@@ -82,7 +82,7 @@ def generate_network_dict(database_list):
             "name": network.name,
             "datatype": datatype_name.name,
             "provenance": network.provenance,
-            "format": network.format,
+            "format": network.network_format,
             "date_added": datetime.datetime.strftime(
                 network.date_added, DATETIME_FORMAT
             ),
@@ -98,7 +98,7 @@ def set_device_choices():
         (
             device.id,
             (
-                f"{device.name}, {device.type}, {device.os}, "
+                f"{device.name}, {device.device_type}, {device.os}, "
                 f"{(Ip.query.get(device.ip_id)).name}, {device.date_added}"
             ),
         )
@@ -113,7 +113,7 @@ def set_network_choices():
             network.id,
             (
                 f"{network.name}, {(Datatype.query.get(network.datatype_id)).name}, "
-                f"{network.provenance}, {network.format}, {network.date_added}",
+                f"{network.provenance}, {network.network_format}, {network.date_added}",
             ),
         )
         for network in Network.query.all()
@@ -128,7 +128,8 @@ def clear_selected_table(model):
 
 def check_contents_of_table(table):
     """Checks the given table is not populated.
-    This is to prevent the application attempting to add duplicate data if the url is manually accessed.
+    This is to prevent the application attempting to
+    add duplicate data if the url is manually accessed.
     """
     records = table.query.all()
     return len(records)
