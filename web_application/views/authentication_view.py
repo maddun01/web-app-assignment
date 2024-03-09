@@ -1,4 +1,4 @@
-## Views for displaying various login pages
+"""Views for displaying various login pages."""
 
 from flask import Blueprint, redirect, render_template, url_for, request
 from flask_login import login_user, login_required, logout_user
@@ -39,7 +39,7 @@ def login():
         if user_object.check_password(form.password.data) and user_object is not None:
             login_user(user_object)
             next_page = request.args.get("next")
-            if next_page == None or not next[0] == "/":
+            if next_page is None or not next[0] == "/":
                 next_page = url_for("index")
             return redirect(next_page)
     return render_template("login.html", form=form)

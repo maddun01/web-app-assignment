@@ -1,4 +1,6 @@
-## Initialises the web app and the database
+"""Initialises the web app and the database."""
+
+# pylint: disable=C0413
 
 import os
 from flask import Flask

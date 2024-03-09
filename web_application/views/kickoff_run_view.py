@@ -1,4 +1,4 @@
-## View for displaying kickoff run page
+"""View for displaying kickoff run page."""
 
 import datetime
 
@@ -20,7 +20,7 @@ def kickoff_run():
     form = KickoffRun()
     form.device_id.choices = set_device_choices()
     form.network_id.choices = set_network_choices()
-    # breakpoint()
+
     if form.validate_on_submit():
         print(form.device_id.data)
         device = db.session.get(Device, form.device_id.data)

@@ -1,4 +1,4 @@
-## Form for collecting user inputs for registering, logging in and populating "hidden" databases
+"""Form for collecting user inputs for registering, logging in and populating "hidden" databases."""
 
 from flask_wtf import FlaskForm
 from wtforms import (
@@ -36,7 +36,7 @@ class LoginForm(FlaskForm):
     def validate_password(self, password):
         """Check if the given password matches."""
         user = User.query.filter_by(username=self.username.data).first()
-        if user != None:
+        if user is not None:
             if not user.check_password(self.password.data):
                 raise ValidationError("Incorrect password")
 

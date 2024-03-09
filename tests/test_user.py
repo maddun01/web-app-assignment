@@ -1,4 +1,4 @@
-## Tests for the User model
+"""Tests for the User model."""
 
 import unittest
 

@@ -1,4 +1,4 @@
-## Tests for the Network model
+"""Tests for the Network model."""
 
 import datetime
 import unittest
@@ -9,7 +9,8 @@ from web_application.utils import clear_selected_table
 
 
 class NetworkTests(unittest.TestCase):
-    """Unittests for the Network database model. Note: running tests will clear the database tables."""
+    """Unittests for the Network database model.
+    Note: running tests will clear the database tables."""
 
     def test_create_network(self):
         """Creates a new network object and adds it to the db.
@@ -29,9 +30,11 @@ class NetworkTests(unittest.TestCase):
             name = "test network"
             datatype_id = Datatype.query.filter_by(name=datatype_name).first().id
             provenance = "test provenance"
-            format = "test format"
+            network_format = "test format"
             date_added = datetime.datetime.now()
-            network = Network(name, datatype_id, provenance, format, date_added, None)
+            network = Network(
+                name, datatype_id, provenance, network_format, date_added, None
+            )
 
             # Act
             db.session.add(network)
@@ -59,9 +62,11 @@ class NetworkTests(unittest.TestCase):
             name = "test network"
             datatype_id = Datatype.query.filter_by(name=datatype_name).first().id
             provenance = "test provenance"
-            format = "test format"
+            network_format = "test format"
             date_added = datetime.datetime.now()
-            network = Network(name, datatype_id, provenance, format, date_added, None)
+            network = Network(
+                name, datatype_id, provenance, network_format, date_added, None
+            )
 
             # Add network to database and check it exists
             db.session.add(network)

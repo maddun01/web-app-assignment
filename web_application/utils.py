@@ -1,10 +1,12 @@
-## Collection of necessary functions for various parts of the application
+"""Collection of necessary functions for various parts of the application."""
 
 import datetime
 
+from functools import wraps
+
 from flask import current_app, redirect, url_for
 from flask_login import current_user
-from functools import wraps
+
 
 from web_application import db, login_manager
 from web_application.models.model import Datatype, Device, Ip, Network
@@ -28,7 +30,7 @@ def auth_required():
             if not current_user.is_authenticated:
                 return current_app.login_manager.unauthorized()
             user_role = current_user.is_admin
-            if user_role != True:
+            if user_role is not True:
                 return current_app.login_manager.unauthorized()
             return fn(*args, **kwargs)
 
@@ -39,7 +41,7 @@ def auth_required():
 
 def format_last_run(field_last_run):
     """Handles None values for the last_run field."""
-    if field_last_run != None:
+    if field_last_run is not None:
         last_run = datetime.datetime.strftime(field_last_run, DATETIME_FORMAT)
     else:
         last_run = None
@@ -95,7 +97,10 @@ def set_device_choices():
     return [
         (
             device.id,
-            f"{device.name}, {device.type}, {device.os}, {(Ip.query.get(device.ip_id)).name}, {device.date_added}",
+            (
+                f"{device.name}, {device.type}, {device.os}, "
+                f"{(Ip.query.get(device.ip_id)).name}, {device.date_added}"
+            ),
         )
         for device in Device.query.all()
     ]
@@ -106,7 +111,10 @@ def set_network_choices():
     return [
         (
             network.id,
-            f"{network.name}, {(Datatype.query.get(network.datatype_id)).name}, {network.provenance}, {network.format}, {network.date_added}",
+            (
+                f"{network.name}, {(Datatype.query.get(network.datatype_id)).name}, "
+                f"{network.provenance}, {network.format}, {network.date_added}",
+            ),
         )
         for network in Network.query.all()
     ]
