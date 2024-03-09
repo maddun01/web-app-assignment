@@ -1,4 +1,4 @@
-## Form for mimicking starting a Jenkins Run
+"""Form for mimicking starting a Jenkins Run."""
 
 from flask_wtf import FlaskForm
 from wtforms import SelectField, SubmitField

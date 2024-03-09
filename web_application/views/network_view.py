@@ -1,4 +1,6 @@
-## Views for displaying various network pages
+"""Views for displaying various network pages."""
+
+# pylint: disable=R1705
 
 import datetime
 from flask import Blueprint, redirect, render_template, url_for
@@ -30,10 +32,12 @@ def add_network():
         name = form.name.data
         datatype = form.datatype.data
         provenance = form.provenance.data
-        format = form.format.data
+        network_format = form.format.data
         date_added = datetime.datetime.now()
 
-        new_network = Network(name, datatype, provenance, format, date_added, None)
+        new_network = Network(
+            name, datatype, provenance, network_format, date_added, None
+        )
         db.session.add(new_network)
         db.session.commit()
         return redirect(url_for("networks.list_networks"))
@@ -64,7 +68,10 @@ def update_network():
         }
 
         # Sets each of the network fields to the new data, if given
-        for field, (network_field, data) in field_mapping.items():
+        for field, (  # pylint: disable=W0612
+            network_field,
+            data,
+        ) in field_mapping.items():
             if data is not None:
                 setattr(updated_network, network_field, data)
 
@@ -90,8 +97,8 @@ def delete_network():
     form = DeleteNetwork()
     form.id.choices = set_network_choices()
     if form.validate_on_submit():
-        id = form.id.data
-        network_del = db.session.get(Network, id)
+        network_id = form.id.data
+        network_del = db.session.get(Network, network_id)
         db.session.delete(network_del)
         db.session.commit()
         return redirect(url_for("networks.list_networks"))

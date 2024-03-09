@@ -1,11 +1,12 @@
-## Tests for the User model
+"""Tests for the User model."""
 
 import unittest
+
+from werkzeug.security import check_password_hash
 
 from web_application import app, db
 from web_application.models.model import User
 from web_application.utils import clear_selected_table
-from werkzeug.security import check_password_hash
 
 
 class UserTests(unittest.TestCase):

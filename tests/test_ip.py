@@ -1,4 +1,4 @@
-## Tests for the Ip model
+"""Tests for the Ip model."""
 
 import unittest
 

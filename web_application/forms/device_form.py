@@ -1,4 +1,4 @@
-## Form for collecting user inputs for creating, updating and deleting devices
+"""Form for collecting user inputs for creating, updating and deleting devices."""
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, RadioField, SelectField, SubmitField

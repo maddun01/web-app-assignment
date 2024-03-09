@@ -1,4 +1,7 @@
-## Database models
+"""Database model classes."""
+
+# pylint: disable=R0903
+# pylint: disable=R0913
 
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -57,7 +60,7 @@ class Device(db.Model):
     __tablename__ = "devices"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, nullable=False)
-    type = db.Column(db.Text, nullable=False)
+    device_type = db.Column(db.Text, nullable=False)
     os = db.Column(db.Text, nullable=False)
 
     # Many to one relationship between device and ip
@@ -65,9 +68,9 @@ class Device(db.Model):
     date_added = db.Column(db.DateTime)
     last_run = db.Column(db.DateTime, nullable=True)
 
-    def __init__(self, name, type, os, ip_id, date_added, last_run):
+    def __init__(self, name, device_type, os, ip_id, date_added, last_run):
         self.name = name
-        self.type = type
+        self.device_type = device_type
         self.os = os
         self.ip_id = ip_id
         self.date_added = date_added
@@ -94,14 +97,16 @@ class Network(db.Model):
     name = db.Column(db.Text)
     datatype_id = db.Column(db.Integer, db.ForeignKey("datatypes.id"))
     provenance = db.Column(db.Text)
-    format = db.Column(db.Text)
+    network_format = db.Column(db.Text)
     date_added = db.Column(db.DateTime)
     last_run = db.Column(db.DateTime, nullable=True)
 
-    def __init__(self, name, datatype_id, provenance, format, date_added, last_run):
+    def __init__(
+        self, name, datatype_id, provenance, network_format, date_added, last_run
+    ):
         self.name = name
         self.datatype_id = datatype_id
         self.provenance = provenance
-        self.format = format
+        self.network_format = network_format
         self.date_added = date_added
         self.last_run = last_run
