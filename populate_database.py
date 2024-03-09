@@ -1,9 +1,11 @@
-## Quickstart script for fully populating the database
+"""Quickstart script for fully populating the database"""
+
+import datetime
 
 from web_application import app, db
-from web_application.models.model import *
+from web_application.models.model import Ip, Datatype, Device, Network, User
 from web_application.utils import populate_tables
-import datetime
+
 
 with app.app_context():
     # Populate "hidden databases"
