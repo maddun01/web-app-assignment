@@ -6,9 +6,18 @@ This web application is designed to aggregate all the information needed to star
 Users can view and manage device and network configurations before kicking off new builds on Jenkins.
 
 ## Hosting
-This application is hosted on Python Anywhere, a free online hosting tool.
+This application is hosted on Render, a free online hosting tool.
 
-This can be accessed at https://maddyd.eu.pythonanywhere.com/
+This can be accessed at https://system-analysis-dashboard.onrender.com
+
+## CI/CD
+This application has two continuous integration pipelines built using GitHub Actions.
+
+* The PR pipeline will run whenever a new pull request is opened, and runs the Black, Pylint and Test pipelines.
+
+    * These will check the formatting and style of the incoming code, as well as that the tests pass.
+
+* The Merge pipeline runs whenever a pull request is closed, and automatically deploys the web application on Render.
 
 ## Setup
 To run the application locally, follow these steps:
@@ -18,7 +27,13 @@ To run the application locally, follow these steps:
     ```commandline
     pip install -r requirements.txt
     ```
-3. Set the flask application environment variable
+3. Set the environment variables
+
+    ```commandline
+    export DATABASE_URL={database url}
+    export SECRET_KEY="mysecretkey"
+    ```
+4. Set the flask application environment variable
 
     Windows:
     ```commandline
@@ -30,14 +45,14 @@ To run the application locally, follow these steps:
     ```
     
     
-4. Set up the database migrations directory
+5. Set up the database migrations directory
     ```commandline
     flask db init
     flask db migrate -m "<your message here>"
     flask db upgrade
     ```
 
-5. Run the setup file to populate the database with example data
+6. Run the setup file to populate the database with example data
     ```commandline
     python populate_database.py
     ```
