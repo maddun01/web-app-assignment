@@ -26,6 +26,6 @@ jobs:
         pip install -r requirements.txt
     - name: Run integration tests
       env:
-          DATABASE_URL = ${{ secrets.DATABASE_URL }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
       run: |
         python3 -m unittest discover tests/
