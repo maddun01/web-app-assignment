@@ -26,4 +26,4 @@ jobs:
         pip install -r requirements.txt
     - name: Run integration tests
       run: |
-        git checkout create-pr-workflows
+        python3 -m unittest discover tests/
