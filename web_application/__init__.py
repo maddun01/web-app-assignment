@@ -15,7 +15,7 @@ login_manager = LoginManager()
 app = Flask(__name__)
 
 # Secret key for forms
-app.config["SECRET_KEY"] = "mysecretkey"
+app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
 
 # Database setup and config
 basedir = os.path.abspath(os.path.dirname(__file__))
