@@ -24,13 +24,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install pylint
         pip install -r requirements.txt
-    - name: Create sandbox db
+    - name: Run integration tests
       env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
       run: |
         flask db init
         flask db migrate
         flask db upgrade
-    - name: Run integration tests
-      run: |
         python3 -m unittest discover tests/
