@@ -2,4 +2,4 @@
 
 
 class AppError(Exception):
-    pass
+    """Custom class for catching specific errors"""
