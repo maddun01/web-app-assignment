@@ -3,3 +3,4 @@
 flask-course/
 migrations/
 *.sqlite
+*.log

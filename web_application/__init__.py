@@ -2,6 +2,7 @@
 
 # pylint: disable=C0413
 
+import logging
 import os
 from flask import Flask
 from flask_login import LoginManager
@@ -13,6 +14,18 @@ login_manager = LoginManager()
 
 # Set up flask application
 app = Flask(__name__)
+
+# Configure logging
+logging.basicConfig(
+    filename="app.log",
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(name)s : %(message)s",
+)
+logging.captureWarnings(True)
+
+logger = logging.getLogger(__name__)
+
+# app.logger.setLevel(logging.INFO)
 
 # Secret key for forms
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
@@ -26,6 +39,7 @@ app.config["SQL_ALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
 Migrate(app, db)
+logging.info("Migrated database")
 
 # Initialise login manager using the app and set the login page
 login_manager.init_app(app)
