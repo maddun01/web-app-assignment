@@ -84,7 +84,7 @@ def update_device():
             db.session.commit()
         except Exception as e:
             logger.exception("Failed to update new device: %s", str(updated_device))
-            raise AppError("Failed to Update Device")
+            raise AppError("Failed to Update Device") from e
         logger.info("Device with id %s updated", updated_device.id)
         return redirect(url_for("devices.list_devices"))
     return render_template("update_device.html", form=form)

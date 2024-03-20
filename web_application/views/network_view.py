@@ -91,7 +91,7 @@ def update_network():
 
         except Exception as e:
             logger.exception("Failed to update new network: %s", str(updated_network))
-            raise AppError("Failed to Update Network")
+            raise AppError("Failed to Update Network") from e
         logger.info("Network with id %s updated", updated_network.id)
         return redirect(url_for("networks.list_networks"))
     return render_template("update_network.html", form=form)

@@ -19,7 +19,6 @@ def general_error(received_error):
     """Custom error handler for catching exceptions."""
     logger.exception(received_error)
     return received_error
-    # return render_template("error.html", error="An Error Has Occurred")
 
 
 @error_blueprint.app_errorhandler(exceptions.NotFound)
@@ -36,7 +35,7 @@ def app_error(received_error):
 
 
 @error_blueprint.app_errorhandler(exc.OperationalError)
-def sqlalchemy_error(received_error):
+def sqlalchemy_error(received_error):  # pylint: disable=unused-argument
     """Custom error handler for catching SQLAlchemy errors."""
     return render_template(
         "error.html",

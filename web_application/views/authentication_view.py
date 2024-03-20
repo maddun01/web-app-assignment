@@ -57,7 +57,7 @@ def login():
                     next_page = url_for("index")
         except Exception as e:
             logger.exception("User failed to log in")
-            raise AppError("Login Unsuccessful")
+            raise AppError("Login Unsuccessful") from e
         logger.info("User with id %s logged in", user_object.id)
         return redirect(next_page)
     return render_template("login.html", form=form)
