@@ -58,7 +58,7 @@ def generate_device_dict(database_list):
         dictionary = {
             "id": device.id,
             "name": device.name,
-            "type": device.device_type,
+            "device_type": device.device_type,
             "os": device.os,
             "ip": ip_name.name,
             "date_added": datetime.datetime.strftime(
@@ -82,7 +82,7 @@ def generate_network_dict(database_list):
             "name": network.name,
             "datatype": datatype_name.name,
             "provenance": network.provenance,
-            "format": network.network_format,
+            "network_format": network.network_format,
             "date_added": datetime.datetime.strftime(
                 network.date_added, DATETIME_FORMAT
             ),

@@ -76,6 +76,12 @@ class Device(db.Model):
         self.date_added = date_added
         self.last_run = last_run
 
+    def __str__(self):
+        return (
+            f"Name: {self.name}, Device Type: {self.device_type},"
+            f"OS: {self.os}, IP: {self.ip_id}"
+        )
+
 
 class Ip(db.Model):
     """Create a table for ips in the db."""
@@ -110,3 +116,9 @@ class Network(db.Model):
         self.network_format = network_format
         self.date_added = date_added
         self.last_run = last_run
+
+    def __str__(self):
+        return (
+            f"Name: {self.name}, Datatype ID: {self.datatype_id}, "
+            f"Provenance: {self.provenance}, Network Format: {self.network_format}"
+        )

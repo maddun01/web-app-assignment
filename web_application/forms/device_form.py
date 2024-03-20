@@ -9,7 +9,7 @@ class AddDevice(FlaskForm):
     """Inputs for a new device."""
 
     name = StringField("Device Name", validators=[DataRequired()])
-    type = StringField("Device Type", validators=[DataRequired()])
+    device_type = StringField("Device Type", validators=[DataRequired()])
     os = StringField("Device Operating System", validators=[DataRequired()])
     ip = RadioField(validators=[DataRequired()])
     submit = SubmitField("Add Device")
@@ -24,8 +24,8 @@ class UpdateDevice(FlaskForm):
     name = StringField(
         "New Device Name", validators=[Optional()], filters=[lambda x: x or None]
     )
-    type = StringField(
-        "New Type", validators=[Optional()], filters=[lambda x: x or None]
+    device_type = StringField(
+        "New Device Type", validators=[Optional()], filters=[lambda x: x or None]
     )
     os = StringField("New OS", validators=[Optional()], filters=[lambda x: x or None])
     ip = RadioField(validators=[Optional()], filters=[lambda x: x or None])

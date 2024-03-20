@@ -11,7 +11,7 @@ class AddNetwork(FlaskForm):
     name = StringField("Network Name", validators=[DataRequired()])
     datatype = RadioField(validators=[DataRequired()])
     provenance = StringField("Network Provenance", validators=[DataRequired()])
-    format = StringField("Network Format", validators=[DataRequired()])
+    network_format = StringField("Network Format", validators=[DataRequired()])
     submit = SubmitField("Add Network")
 
 
@@ -28,8 +28,8 @@ class UpdateNetwork(FlaskForm):
     provenance = StringField(
         "New Provenance", validators=[Optional()], filters=[lambda x: x or None]
     )
-    format = StringField(
-        "New Format", validators=[Optional()], filters=[lambda x: x or None]
+    network_format = StringField(
+        "New Network Format", validators=[Optional()], filters=[lambda x: x or None]
     )
     submit = SubmitField("Update")
 
