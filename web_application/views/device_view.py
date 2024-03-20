@@ -4,6 +4,7 @@
 
 import datetime
 import logging
+
 from flask import Blueprint, redirect, render_template, url_for
 from flask_login import login_required
 

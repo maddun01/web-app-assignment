@@ -4,6 +4,7 @@
 
 import datetime
 import logging
+
 from flask import Blueprint, redirect, render_template, url_for
 from flask_login import login_required
 
@@ -38,7 +39,7 @@ def add_network():
             name = form.name.data
             datatype = form.datatype.data
             provenance = form.provenance.data
-            network_format = form.format.data
+            network_format = form.network_format.data
             date_added = datetime.datetime.now()
 
             new_network = Network(
