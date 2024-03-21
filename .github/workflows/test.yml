@@ -31,8 +31,8 @@ jobs:
         flask db init
         flask db migrate
         flask db upgrade
-        pwd
-        echo "pwd"
+        echo "PYTHONPATH=home/runner/work/web-app-assignment/web-app-assignment" >> "$GITHUB_ENV"
+
         python3 tests/test_datatype.py
         python3 tests/test_device.py
         python3 tests/test_ip.py
