@@ -1,5 +1,7 @@
 """Collection of necessary functions for various parts of the application."""
 
+# pylint: disable=W0613
+
 import datetime
 
 from functools import wraps
