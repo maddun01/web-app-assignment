@@ -31,6 +31,8 @@ jobs:
         flask db init
         flask db migrate
         flask db upgrade
+        pwd
+        echo "pwd"
         python3 tests/test_datatype.py
         python3 tests/test_device.py
         python3 tests/test_ip.py
