@@ -32,8 +32,6 @@ logger = logging.getLogger(__name__)
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
 
 # Database setup and config
-basedir = os.path.abspath(os.path.dirname(__file__))
-
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
 
 app.config["SQL_ALCHEMY_TRACK_MODIFICATIONS"] = False
