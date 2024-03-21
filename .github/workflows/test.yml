@@ -31,10 +31,4 @@ jobs:
         flask db init
         flask db migrate
         flask db upgrade
-        echo "PYTHONPATH=home/runner/work/web-app-assignment/web-app-assignment" >> "$GITHUB_ENV"
-
-        python3 tests/test_datatype.py
-        python3 tests/test_device.py
-        python3 tests/test_ip.py
-        python3 tests/test_network.py
-        python3 tests/test_user.py
+        python3 -m unittest discover integration_tests/
