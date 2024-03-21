@@ -24,15 +24,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install pylint
         pip install -r requirements.txt
-    - name: Run integration tests
-      env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    - name: Run security tests
       run: |
-        flask db init
-        flask db migrate
-        flask db upgrade
-        python3 tests/test_datatype.py
-        python3 tests/test_device.py
-        python3 tests/test_ip.py
-        python3 tests/test_network.py
-        python3 tests/test_user.py
+        python3 tests/test_security.py
