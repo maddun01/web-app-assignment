@@ -26,4 +26,7 @@ jobs:
         pip install -r requirements.txt
     - name: Run security tests
       run: |
+        flask db init
+        flask db migrate
+        flask db upgrade
         python3 -m unittest discover security_tests/

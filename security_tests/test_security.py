@@ -1,7 +1,6 @@
 """Tests for application authentication"""
 
-import sqlalchemy
-import unittest
+# pylint: disable=W0611
 
 from flask_login import current_user, login_user, logout_user
 from flask_testing import TestCase
@@ -12,6 +11,8 @@ from web_application.models.model import User
 
 
 class AuthenticationTests(TestCase):
+    """Security tests for application authentication"""
+
     def create_app(self):
         app.config["TESTING"] = True
         app.config["TESTING"] = True
@@ -50,7 +51,7 @@ class AuthenticationTests(TestCase):
         """Attempt to login with incorrect credentials"""
         self.client.post(
             "/auth/login",
-            data=dict(username="test_user", password="test_password"),
+            data={"username": "test_user", "password": "test_password"},
             follow_redirects=True,
         )
         self.assertTrue(current_user.is_authenticated)
@@ -59,7 +60,7 @@ class AuthenticationTests(TestCase):
         """Attempt to login with incorrect credentials"""
         response = self.client.post(
             "/auth/login",
-            data=dict(username="wrong_user", password="wrong_password"),
+            data={"username": "wrong_user", "password": "wrong_password"},
             follow_redirects=True,
         )
         self.assertIn(b"Username does not exist", response.data)
@@ -92,6 +93,8 @@ class AuthenticationTests(TestCase):
 
 
 class InjectionTests(TestCase):
+    """Security tests for checking injection attack prevention"""
+
     def create_app(self):
         app.config["TESTING"] = True
         app.config["TESTING"] = True
@@ -113,10 +116,10 @@ class InjectionTests(TestCase):
         db.drop_all()
 
     def test_sql_injection(self):
+        """Test the response to a simulated injection attack"""
         response = self.client.post(
             "/auth/login",
-            data=dict(
-                username="' OR 1=1 --", password="password", follow_redirects=True
-            ),
+            data={"username": "' OR 1=1 --", "password": "password"},
+            follow_redirects=True,
         )
         self.assertIn(b"Invalid character used", response.data)
