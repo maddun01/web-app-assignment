@@ -1,6 +1,7 @@
 """Form for collecting user inputs for registering, logging in and populating "hidden" databases."""
 
 # pylint: disable=W0613
+# pylint: disable=R0903
 
 from flask_wtf import FlaskForm
 from wtforms import (
@@ -80,7 +81,7 @@ class RegistrationForm(FlaskForm):
         validators=[
             DataRequired(),
             Regexp(
-                "^[\w-]+$",
+                "^[\\w-]+$",
                 message="Username must only contain alphanumeric characters",
             ),
         ],
