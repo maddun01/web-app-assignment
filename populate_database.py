@@ -211,8 +211,8 @@ with app.app_context():
     print("Populated Networks")
 
     # Create and add Users
-    admin_user = User("admin@admin.com", "admin", "admin")
-    general_user = User("user@user.com", "user", "user")
+    admin_user = User("admin@admin.com", "admin", "admin1")
+    general_user = User("user@user.com", "user", "user1")
     db.session.add_all([admin_user, general_user])
     db.session.commit()
 

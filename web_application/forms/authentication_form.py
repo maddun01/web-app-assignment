@@ -1,6 +1,7 @@
 """Form for collecting user inputs for registering, logging in and populating "hidden" databases."""
 
 # pylint: disable=W0613
+# pylint: disable=R0903
 
 from flask_wtf import FlaskForm
 from wtforms import (
@@ -11,7 +12,7 @@ from wtforms import (
     ValidationError,
     widgets,
 )
-from wtforms.validators import DataRequired, Email, EqualTo, Optional
+from wtforms.validators import DataRequired, Email, EqualTo, Optional, Regexp
 
 from web_application.models.model import User
 
@@ -21,6 +22,32 @@ class MultiCheckboxField(SelectMultipleField):
 
     widget = widgets.ListWidget(prefix_label=False)
     option_widget = widgets.CheckboxInput()
+
+
+class NotEqualTo(EqualTo):
+    """Creates a custom WTForms validator that checks given forms do not match"""
+
+    def __call__(self, form, field):
+        try:
+            other = form[self.fieldname]
+        except KeyError as exc:
+            raise ValidationError(
+                field.gettext("Invalid field name '%s'.") % self.fieldname
+            ) from exc
+        if field.data != other.data:
+            return
+
+        d = {
+            "other_label": hasattr(other, "label")
+            and other.label.text
+            or self.fieldname,
+            "other_name": self.fieldname,
+        }
+        message = self.message
+        if message is None:
+            message = field.gettext("Field must be equal to %(other_name)s.")
+
+        raise ValidationError(message % d)
 
 
 class LoginForm(FlaskForm):
@@ -49,12 +76,22 @@ class RegistrationForm(FlaskForm):
     email = StringField(
         "Enter email", validators=[Email("Invalid Email"), DataRequired()]
     )
-    username = StringField("Enter Username", validators=[DataRequired()])
+    username = StringField(
+        "Enter Username",
+        validators=[
+            DataRequired(),
+            Regexp(
+                "^[\\w-]+$",
+                message="Username must only contain alphanumeric characters",
+            ),
+        ],
+    )
     password = PasswordField(
         "Enter password",
         validators=[
             DataRequired(),
             EqualTo("confirm_password", message="Passwords do not match"),
+            NotEqualTo("username", message="Username and password cannot be the same"),
         ],
     )
     confirm_password = PasswordField("Reenter Password", validators=[DataRequired()])
