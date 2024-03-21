@@ -17,16 +17,29 @@
                 {{form.name(class="form-control", placeholder="")}}
                 {{form.name.label}}
             </div>
+            {% if form.errors["name"]%}
+            <p>{{form.errors["name"][0]}}</p>
+            {% else %}
             <br>
+            {%endif%}
             <div class="form-floating">
                 {{form.device_type(class="form-control", placeholder="")}}
                 {{form.device_type.label}}
             </div>
+            {% if form.errors["device_type"]%}
+            <p>{{form.errors["device_type"][0]}}</p>
+            {% else %}
             <br>
+            {%endif%}
             <div class="form-floating">
                 {{form.os(class="form-control", placeholder="")}}
                 {{form.os.label}}
             </div>
+            {% if form.errors["os"]%}
+            <p>{{form.errors["os"][0]}}</p>
+            {% else %}
+            <br>
+            {%endif%}
             <p>New IP</p>
             {% for subfield in form.ip %}
             <div class="form-check form-check-inline">

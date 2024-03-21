@@ -5,12 +5,19 @@ from wtforms import StringField, RadioField, SelectField, SubmitField
 from wtforms.validators import DataRequired, Optional
 
 
+from web_application.utils import disallow_characters
+
+
 class AddDevice(FlaskForm):
     """Inputs for a new device."""
 
-    name = StringField("Device Name", validators=[DataRequired()])
-    device_type = StringField("Device Type", validators=[DataRequired()])
-    os = StringField("Device Operating System", validators=[DataRequired()])
+    name = StringField("Device Name", validators=[DataRequired(), disallow_characters])
+    device_type = StringField(
+        "Device Type", validators=[DataRequired(), disallow_characters]
+    )
+    os = StringField(
+        "Device Operating System", validators=[DataRequired(), disallow_characters]
+    )
     ip = RadioField(validators=[DataRequired()])
     submit = SubmitField("Add Device")
 
@@ -22,12 +29,20 @@ class UpdateDevice(FlaskForm):
         "Select a Device", validators=[Optional()], filters=[lambda x: x or None]
     )
     name = StringField(
-        "New Device Name", validators=[Optional()], filters=[lambda x: x or None]
+        "New Device Name",
+        validators=[Optional(), disallow_characters],
+        filters=[lambda x: x or None],
     )
     device_type = StringField(
-        "New Device Type", validators=[Optional()], filters=[lambda x: x or None]
+        "New Device Type",
+        validators=[Optional(), disallow_characters],
+        filters=[lambda x: x or None],
     )
-    os = StringField("New OS", validators=[Optional()], filters=[lambda x: x or None])
+    os = StringField(
+        "New OS",
+        validators=[Optional(), disallow_characters],
+        filters=[lambda x: x or None],
+    )
     ip = RadioField(validators=[Optional()], filters=[lambda x: x or None])
     submit = SubmitField("Update")
 
