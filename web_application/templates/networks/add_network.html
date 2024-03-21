@@ -25,6 +25,11 @@
                 {{form.name(class="form-control", placeholder="")}}
                 {{form.name.label}}
             </div>
+            {% if form.errors["name"]%}
+            <p>{{form.errors["name"][0]}}</p>
+            {% else %}
+            <br>
+            {%endif%}
             <p>Datatype</p>
             {% for subfield in form.datatype %}
             <div class="form-check form-check-inline">
@@ -37,12 +42,20 @@
                 {{form.provenance(class="form-control", placeholder="")}}
                 {{form.provenance.label}}
             </div>
+            {% if form.errors["provenance"]%}
+            <p>{{form.errors["provenance"][0]}}</p>
+            {% else %}
             <br>
+            {%endif%}
             <div class="form-floating">
                 {{form.network_format(class="form-control", placeholder="")}}
                 {{form.network_format.label}}
             </div>
+            {% if form.errors["network_format"]%}
+            <p>{{form.errors["network_format"][0]}}</p>
+            {% else %}
             <br>
+            {%endif%}
             <div class="row">
                 {{form.submit(class="btn col-lg-6")}}
                 <a href="{{url_for('networks.list_networks')}}" class="btn col-lg-6">Cancel</a>

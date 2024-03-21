@@ -15,6 +15,7 @@ from wtforms import (
 from wtforms.validators import DataRequired, Email, EqualTo, Optional, Regexp
 
 from web_application.models.model import User
+from web_application.utils import disallow_characters_auth
 
 
 class MultiCheckboxField(SelectMultipleField):
@@ -53,8 +54,12 @@ class NotEqualTo(EqualTo):
 class LoginForm(FlaskForm):
     """Allows registered users to access the application."""
 
-    username = StringField("Enter Username", validators=[DataRequired()])
-    password = PasswordField("Enter password", validators=[DataRequired()])
+    username = StringField(
+        "Enter Username", validators=[DataRequired(), disallow_characters_auth]
+    )
+    password = PasswordField(
+        "Enter password", validators=[DataRequired(), disallow_characters_auth]
+    )
     submit = SubmitField("Login")
 
     def validate_username(self, username):
@@ -74,7 +79,8 @@ class RegistrationForm(FlaskForm):
     """Registration form for new users."""
 
     email = StringField(
-        "Enter email", validators=[Email("Invalid Email"), DataRequired()]
+        "Enter email",
+        validators=[Email("Invalid Email"), DataRequired(), disallow_characters_auth],
     )
     username = StringField(
         "Enter Username",
@@ -84,6 +90,7 @@ class RegistrationForm(FlaskForm):
                 "^[\\w-]+$",
                 message="Username must only contain alphanumeric characters",
             ),
+            disallow_characters_auth,
         ],
     )
     password = PasswordField(
@@ -92,9 +99,12 @@ class RegistrationForm(FlaskForm):
             DataRequired(),
             EqualTo("confirm_password", message="Passwords do not match"),
             NotEqualTo("username", message="Username and password cannot be the same"),
+            disallow_characters_auth,
         ],
     )
-    confirm_password = PasswordField("Reenter Password", validators=[DataRequired()])
+    confirm_password = PasswordField(
+        "Reenter Password", validators=[DataRequired(), disallow_characters_auth]
+    )
     submit = SubmitField("Register")
 
     def validate_email(self, email):

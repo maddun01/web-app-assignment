@@ -6,6 +6,7 @@ from functools import wraps
 
 from flask import current_app, redirect, url_for
 from flask_login import current_user
+from wtforms import ValidationError
 
 
 from web_application import db, login_manager
@@ -170,3 +171,19 @@ def populate_ips():
         x2 = Ip("X2")
         db.session.add_all([a55, a76, g57, g77, x1, x2])
         db.session.commit()
+
+
+def disallow_characters(form, field):
+    """Custom validator to help protect against injection attacks"""
+    invalid_chars = ["'", '"', "--"]
+    for char in invalid_chars:
+        if char in field.data:
+            raise ValidationError("Invalid character used")
+
+
+def disallow_characters_auth(form, field):
+    """Custom validator to help protect against injection attacks"""
+    invalid_chars = [" ", "'", '"', "--"]
+    for char in invalid_chars:
+        if char in field.data:
+            raise ValidationError("Invalid character used")

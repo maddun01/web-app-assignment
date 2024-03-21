@@ -37,6 +37,7 @@ def app_error(received_error):
 @error_blueprint.app_errorhandler(exc.OperationalError)
 def sqlalchemy_error(received_error):  # pylint: disable=unused-argument
     """Custom error handler for catching SQLAlchemy errors."""
+    logger.exception(received_error)
     return render_template(
         "error.html",
         error="Unable to access the database. Please contact the administrator",
