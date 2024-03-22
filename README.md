@@ -13,7 +13,7 @@ This can be accessed at https://system-analysis-dashboard.onrender.com
 ## CI/CD
 This application has two continuous integration pipelines built using GitHub Actions.
 
-* The PR pipeline will run whenever a new pull request is opened, and runs the Black, Pylint and Test pipelines.
+* The PR pipeline will run whenever a new pull request is opened, and runs the Black, Pylint, Integration Tests and Security Tests pipelines.
 
     * These will check the formatting and style of the incoming code, as well as that the tests pass.
 
@@ -29,9 +29,15 @@ To run the application locally, follow these steps:
     ```
 3. Set the environment variables
 
+    Windows:
+    ```commandline
+    set DATABASE_URL={database url}
+    set SECRET_KEY={secret key}
+    ```
+    MacOS/Linux:
     ```commandline
     export DATABASE_URL={database url}
-    export SECRET_KEY="mysecretkey"
+    export SECRET_KEY={secret key}
     ```
 4. Set the flask application environment variable
 
@@ -73,4 +79,6 @@ The integration tests have been written using the `unittest` python module.
 
 Visual Studio Code has a built-in testing suite that will run the tests.
 
-To configure it, set the test folder to `test/` and the pattern to look for as `test_*.py`
+To configure it, set the test folder to `integration_tests/` and the pattern to look for as `test_*.py`
+
+The security tests can be run in the same way, instead setting the test folder as `security_tests/`.
