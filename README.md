@@ -5,11 +5,6 @@ This web application is designed to aggregate all the information needed to star
 
 Users can view and manage device and network configurations before kicking off new builds on Jenkins.
 
-## Hosting
-This application is hosted on Render, a free online hosting tool.
-
-This can be accessed at https://system-analysis-dashboard.onrender.com
-
 ## CI/CD
 This application has two continuous integration pipelines built using GitHub Actions.
 
